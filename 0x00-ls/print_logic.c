@@ -1,25 +1,21 @@
 #include "customls.h"
 /**
- * normal_print - prints a directory list by using readdir
- * @name: pointer to an open dir
- * @dir_len: number of directories to scan
+ * normal_print - prints a list of filenames and free the memory
+ * @filenames: array of file names to print
  * Return: Nothing.
  */
-void normal_print(char *name, int dir_len)
+void normal_print(char **filenames)
 {
-	int i = 0;
-	DIR *directory;
-	struct dirent *read;
+	int i = 0, dir_len = 0;
 
-	directory = _opendir_safe(name);
-	read = readdir(directory);
+	while (filenames[dir_len])
+		dir_len++;
 	for (i = 0; i < dir_len; i++)
 	{
 		if (i != dir_len - 1)
-			printf("%s\t", read->d_name);
+			printf("%s  ", filenames[i]);
 		else
-			printf("%s\n", read->d_name);
-		read = readdir(directory);
+			printf("%s\n", filenames[i]);
 	}
-	closedir(directory);
+	free_grid(filenames, dir_len);
 }

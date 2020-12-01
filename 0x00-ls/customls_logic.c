@@ -2,16 +2,14 @@
 /**
  * parse_data - initialized dir_len
  *
- * @argv: array with arguments
- * @arguments: array with args for the ls command
+ * @var: structure with malloc variables
  *
  * Return: 0 if success
  **/
-char **parse_data(char *argv[], char **arguments)
+void parse_data(char *argv[], c_per var)
 {
 	int i = 0, arg_len = 0, file_len = 0, j = 0, counter = 0;
-	int filestr_len;
-	char **filenames = NULL;
+	int filestr_len = 0, arg_count = 0;
 
 	for (i = 1; argv[i] != NULL; i++)
 	{
@@ -27,21 +25,26 @@ char **parse_data(char *argv[], char **arguments)
 			file_len++;
 		}
 	}
-	*arguments = malloc(arg_len + 1);
-	filenames = _calloc(file_len + 1, sizeof(char *));
+	*var.arguments = _calloc(arg_len + 1, 1);
+	*var.arg_len = arg_len;
+	*var.filenames = _calloc(file_len + 1, sizeof(char *));
+	*var.file_len = file_len;
 	for (i = 1; argv[i] != NULL; i++)
 	{
 		if (*argv[i] == '-' && (argv[i] + 1) != NULL)
 		{
-			_strcat(*arguments, argv[i]);
+			for (j = 1; j < _strlen(argv[i]); j++)
+			{
+				*(*var.arguments+arg_count) = argv[i][j];
+				arg_count++;
+			}
 		}
 		else
 		{
 			filestr_len = _strlen(argv[i]) + 1;
-			filenames[counter] = malloc(filestr_len);
-			_strncpy(filenames[counter], argv[i], filestr_len);
+			*var.filenames[counter] = malloc(filestr_len);
+			_strncpy(*var.filenames[counter], argv[i], filestr_len);
 			counter++;
 		}
 	}
-	return (filenames);
 }
