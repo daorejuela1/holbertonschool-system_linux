@@ -9,11 +9,11 @@ arg_flags flag_setter(c_per var)
 {
 	int i = 0;
 	arg_flags flags;
+
 	flags.print_below = 0, flags.search_hidden = 0, flags.search_myhidden = 0;
 	flags.long_listing = 0, flags.sort_by_size = 0, flags.sort_by_time = 0;
 	flags.sort_reverse = 0, flags.recursive = 0;
-
-	for (i = 0; *(*var.arguments+i); i++)
+	for (i = 0; *(*var.arguments + i); i++)
 	{
 		if (*(*var.arguments + i) == '1')
 			flags.print_below = 1;
@@ -40,6 +40,5 @@ arg_flags flag_setter(c_per var)
 			exit(2);
 		}
 	}
-
-	return flags;
+	return (flags);
 }

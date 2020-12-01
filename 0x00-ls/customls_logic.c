@@ -1,7 +1,7 @@
 #include "customls.h"
 /**
  * parse_data - initialized dir_len
- *
+ * @argv: program arguments
  * @var: structure with malloc variables
  *
  * Return: 0 if success
@@ -35,7 +35,7 @@ void parse_data(char *argv[], c_per var)
 		{
 			for (j = 1; j < _strlen(argv[i]); j++)
 			{
-				*(*var.arguments+arg_count) = argv[i][j];
+				*(*var.arguments + arg_count) = argv[i][j];
 				arg_count++;
 			}
 		}
