@@ -17,4 +17,5 @@ char *_strcat(char *dest, char *src);
 void free_grid(char **grid, int height);
 void *_calloc(unsigned int nmemb, unsigned int size);
 char *_memset(char *s, char b, unsigned int n);
+char **parse_data(char *argv[], char **arguments);
 #endif
