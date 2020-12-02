@@ -81,7 +81,6 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var)
 		if (dir_len == -1)
 			return (-1);
 		*c_var.directories = get_dir_names(dir_name, dir_len, 3);
-	printf("Coming soon\n");
 	}
 	/*data sort*/
 	/*data print*/
