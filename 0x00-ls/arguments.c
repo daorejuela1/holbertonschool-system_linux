@@ -32,7 +32,7 @@ arg_flags flag_setter(c_per var)
 			flags.sort_by_time = 1;
 		else if (*(*var.arguments + i) == 'R')
 			flags.recursive = 1;
-		else
+		else if (*(*var.arguments + i) != '-')
 		{
 			fprintf(stderr, INVALID, *(*var.arguments + i));
 			fprintf(stderr, "Try 'hls --help' for more information.\n");
