@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
 	if (argc == 1)
 		dir_name = DEFAULT;
 	parse_data(argv, c_vars);
-	printf("lista de argumentos %s\n", *c_vars.arguments);
 	ls_flags = flag_setter(c_vars);
 	free(*c_vars.arguments);
 	if (*c_vars.filenames[0] == NULL)
