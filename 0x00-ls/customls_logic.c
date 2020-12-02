@@ -13,7 +13,7 @@ void parse_data(char *argv[], c_per var)
 
 	for (i = 1; argv[i] != NULL; i++)
 	{
-		if (*argv[i] == '-' && (argv[i] + 1) != NULL)
+		if (*argv[i] == '-' && (argv[i][1]) != 0)
 		{
 			for (j = 1; j < _strlen(argv[i]); j++)
 			{
@@ -31,7 +31,7 @@ void parse_data(char *argv[], c_per var)
 	*var.file_len = file_len;
 	for (i = 1; argv[i] != NULL; i++)
 	{
-		if (*argv[i] == '-' && (argv[i] + 1) != NULL)
+		if (*argv[i] == '-' && (argv[i][1]) != 0)
 		{
 			for (j = 1; j < _strlen(argv[i]); j++)
 			{

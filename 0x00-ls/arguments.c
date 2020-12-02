@@ -35,7 +35,7 @@ arg_flags flag_setter(c_per var)
 		else
 		{
 			fprintf(stderr, INVALID, *(*var.arguments + i));
-			/*fprintf(stderr, "Try 'hls --help' for more information.\n");*/
+			fprintf(stderr, "Try 'hls --help' for more information.\n");
 			free(*var.arguments);
 			free_grid(*var.filenames, *var.file_len);
 			exit(2);
