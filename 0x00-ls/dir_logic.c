@@ -17,17 +17,17 @@ int get_dirlen(char *name, int selector)
 	DIR *directory = _opendir_safe(name, selector);
 	struct dirent *read;
 
-	if (selector == 4)
-		return (0);
 	if (!directory)
 	{
+		if (selector == 4)
+			return (0);
 		if (errno == 20)
-			return (1);
+			return (-2);
 		return (-1);
 	}
 	while ((read = readdir(directory)) != NULL)
 	{
-		if (selector == 1)
+		if (selector == 1 || selector == 4)
 			condition = SHOW_ALL;
 		else if (selector == 2)
 			condition = SHOW_ALL && M;

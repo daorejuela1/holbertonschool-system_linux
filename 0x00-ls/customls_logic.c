@@ -78,18 +78,15 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple)
 	}
 	else
 	{
-	dir_len = get_dirlen(dir_name, 3);
+		dir_len = get_dirlen(dir_name, 3);
 		if (dir_len == -1)
 			return (-1);
 		*c_var.directories = get_dir_names(dir_name, dir_len, 3);
 	}
 	/*data sort*/
 	/*data print*/
-	if (multiple >= 2)
-	{
-		*c_var.dir_len = *c_var.dir_len + 1;
+	if (multiple >= 2 && dir_len != -2)
 		printf("%s:\n", dir_name);
-	}
 	if (ls_flag.long_listing)
 		printf("Coming soon\n");
 	else if (ls_flag.print_below)
@@ -97,6 +94,9 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple)
 	else
 		normal_print(*c_var.directories);
 	if (*c_var.dir_len != multiple && multiple >= 2)
+	{
+		*c_var.dir_len = *c_var.dir_len + 1;
 		printf("\n");
+	}
 	return (dir_len == -1 ? 2 : 0);
 }
