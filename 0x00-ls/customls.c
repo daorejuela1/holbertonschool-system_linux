@@ -32,15 +32,14 @@ int main(int argc, char *argv[])
 		dir_name = DEFAULT;
 		dir_len = ls_answer(dir_name, ls_flags, c_vars, 1);
 		if (dir_len == -1)
-		{
 			exit_code = 2;
-		}
 	}
 	multiple = gets_valid(*c_vars.filenames);
 	for (i = 0; *(*c_vars.filenames + i) != NULL; i++)
 	{
 		dir_name = *(*c_vars.filenames + i);
 		dir_len = ls_answer(dir_name, ls_flags, c_vars, multiple);
+		*c_vars.dir_len = *c_vars.dir_len + 1; 
 		if (dir_len == -1)
 		{
 			exit_code = 2;
