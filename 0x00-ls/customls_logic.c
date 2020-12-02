@@ -1,4 +1,5 @@
 #include "customls.h"
+#define INVALID "hls: invalid option -- '%s'\n"
 /**
  * parse_data - initialized dir_len
  * @argv: program arguments
@@ -13,17 +14,19 @@ void parse_data(char *argv[], c_per var)
 
 	for (i = 1; argv[i] != NULL; i++)
 	{
+		if (*argv[i] == '-' && (argv[i][1]) == '-')
+		{
+			fprintf(stderr, INVALID, argv[i]);
+			fprintf(stderr, "Try 'hls --help' for more information.\n");
+			exit(2);
+		}
 		if (*argv[i] == '-' && (argv[i][1]) != 0)
 		{
 			for (j = 1; j < _strlen(argv[i]); j++)
-			{
 				arg_len++;
-			}
 		}
 		else
-		{
 			file_len++;
-		}
 	}
 	*var.arguments = _calloc(arg_len + 1, 1);
 	*var.arg_len = arg_len;
@@ -43,8 +46,7 @@ void parse_data(char *argv[], c_per var)
 		{
 			filestr_len = _strlen(argv[i]) + 1;
 			*(*var.filenames + counter) = malloc(filestr_len);
-			_strncpy(*(*var.filenames + counter), argv[i], filestr_len);
-			counter++;
+			_strncpy(*(*var.filenames + counter++), argv[i], filestr_len);
 		}
 	}
 }
