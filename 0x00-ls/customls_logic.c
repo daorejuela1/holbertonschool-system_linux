@@ -42,8 +42,8 @@ void parse_data(char *argv[], c_per var)
 		else
 		{
 			filestr_len = _strlen(argv[i]) + 1;
-			*var.filenames[counter] = malloc(filestr_len);
-			_strncpy(*var.filenames[counter], argv[i], filestr_len);
+			*(*var.filenames + counter) = malloc(filestr_len);
+			_strncpy(*(*var.filenames + counter), argv[i], filestr_len);
 			counter++;
 		}
 	}
@@ -54,10 +54,11 @@ void parse_data(char *argv[], c_per var)
  * @dir_name: directory name
  * @ls_flag: ls_flags from argument
  * @c_var: malloc data
+ * @multiple: indicates if multiple values are valid to print
  *
  * Return: last exit code in case of a mistake
  **/
-int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var)
+int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple)
 {
 	int dir_len = 0;
 	/*data search*/
@@ -84,11 +85,18 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var)
 	}
 	/*data sort*/
 	/*data print*/
+	if (multiple >= 2)
+	{
+		*c_var.dir_len = *c_var.dir_len + 1;
+		printf("%s:\n", dir_name);
+	}
 	if (ls_flag.long_listing)
 		printf("Coming soon\n");
 	else if (ls_flag.print_below)
 		below_print(*c_var.directories);
 	else
 		normal_print(*c_var.directories);
+	if (*c_var.dir_len != multiple && multiple >= 2)
+		printf("\n");
 	return (dir_len == -1 ? 2 : 0);
 }

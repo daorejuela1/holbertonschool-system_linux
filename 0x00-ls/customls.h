@@ -67,7 +67,8 @@ char *_memset(char *s, char b, unsigned int n);
 void parse_data(char *argv[], c_per variables);
 char **get_dir_names(char *name, int dir_len, int selector);
 arg_flags flag_setter(c_per variables);
-int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var);
+int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple);
 void below_print(char **filenames);
 int _strfcmp(char *p1, char *p2);
+int gets_valid(char **fold_names);
 #endif
