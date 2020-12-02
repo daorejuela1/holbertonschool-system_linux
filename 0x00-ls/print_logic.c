@@ -33,10 +33,7 @@ void below_print(char **filenames)
 		dir_len++;
 	for (i = 0; i < dir_len; i++)
 	{
-		if (i != dir_len - 1)
-			printf("%s\n", filenames[i]);
-		else
-			printf("%s", filenames[i]);
+		printf("%s\n", filenames[i]);
 	}
 	free_grid(filenames, dir_len);
 }
