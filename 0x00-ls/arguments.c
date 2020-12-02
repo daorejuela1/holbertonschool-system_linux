@@ -1,4 +1,5 @@
 #include "customls.h"
+#define INVALID "hls: invalid option -- '%c'\n"
 /**
  * flag_setter - function to set flags by counting the arguments
  * @var: malloc variables
@@ -33,8 +34,8 @@ arg_flags flag_setter(c_per var)
 			flags.recursive = 1;
 		else
 		{
-			fprintf(stderr, "hls: invalid option -- '%c'\n", *(*var.arguments + i));
-			fprintf(stderr, "Try 'hls --help' for more information.\n");
+			fprintf(stderr, INVALID, *(*var.arguments + i));
+			/*fprintf(stderr, "Try 'hls --help' for more information.\n");*/
 			free(*var.arguments);
 			free_grid(*var.filenames, *var.file_len);
 			exit(2);
