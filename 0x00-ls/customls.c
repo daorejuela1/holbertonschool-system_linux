@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	{
 		dir_name = *(*c_vars.filenames + i);
 		dir_len = ls_answer(dir_name, ls_flags, c_vars, multiple);
-		*c_vars.dir_len = *c_vars.dir_len + 1; 
+		*c_vars.dir_len = *c_vars.dir_len + 1;
 		if (dir_len == -1)
 		{
 			exit_code = 2;
