@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	parse_data(argv, c_vars);
 	ls_flags = flag_setter(c_vars);
 	free(*c_vars.arguments);
-	if (*c_vars.filenames[0] == NULL)
+	if (*(*c_vars.filenames) == NULL)
 	{
 		dir_name = DEFAULT;
 		dir_len = ls_answer(dir_name, ls_flags, c_vars, 1);
@@ -66,7 +66,7 @@ int gets_valid(char **fold_names)
 	for (i = 0; *(fold_names + i) != NULL; i++)
 	{
 		dir_name = *(fold_names + i);
-		dir_len = get_dirlen(dir_name, 1);
+		dir_len = get_dirlen(dir_name, 4);
 		if (dir_len >= 1)
 			multiple++;
 	}

@@ -56,7 +56,7 @@ typedef struct c_alloc
 extern int errno;
 void normal_print(char **filenames);
 int get_dirlen(char *name, int selector);
-DIR *_opendir_safe(char *name);
+DIR *_opendir_safe(char *name, int mode);
 int _strcmp(char *p1, char *p2);
 char *_strncpy(char *dest, char *src, int n);
 int _strlen(char *s);

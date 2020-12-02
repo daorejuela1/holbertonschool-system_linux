@@ -14,9 +14,11 @@ int get_dirlen(char *name, int selector)
 {
 	int i = 0;
 	int condition = 0;
-	DIR *directory = _opendir_safe(name);
+	DIR *directory = _opendir_safe(name, selector);
 	struct dirent *read;
 
+	if (selector == 4)
+		return (0);
 	if (!directory)
 	{
 		if (errno == 20)
@@ -43,15 +45,15 @@ int get_dirlen(char *name, int selector)
 /**
  * _opendir_safe - open dir and handle errors at the moment
  * @name: name of the dir
- *
+ * @mode: if counting mode is 4 ignore error alert
  * Return: void.
  */
-DIR *_opendir_safe(char *name)
+DIR *_opendir_safe(char *name, int mode)
 {
 	DIR *directory = opendir(name);
 	int errnum;
 
-	if (directory == NULL)
+	if (directory == NULL && mode != 4)
 	{
 		errnum = errno;
 		switch (errnum)
@@ -83,7 +85,7 @@ char **get_dir_names(char *name, int dir_len, int selector)
 	char **files;
 	struct dirent *read;
 
-	directory = _opendir_safe(name);
+	directory = _opendir_safe(name, 1);
 	if (!directory)
 	{
 		if (errno == 20)
