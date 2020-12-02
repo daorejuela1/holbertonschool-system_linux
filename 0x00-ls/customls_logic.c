@@ -93,7 +93,7 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple)
 		below_print(*c_var.directories);
 	else
 		normal_print(*c_var.directories);
-	if (*c_var.dir_len != multiple && multiple >= 2)
+	if (*c_var.dir_len + 1 != multiple && multiple >= 2)
 	{
 		*c_var.dir_len = *c_var.dir_len + 1;
 		printf("\n");

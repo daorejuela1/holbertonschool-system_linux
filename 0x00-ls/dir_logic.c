@@ -20,7 +20,7 @@ int get_dirlen(char *name, int selector)
 	if (!directory)
 	{
 		if (selector == 4)
-			return (0);
+			return (1);
 		if (errno == 20)
 			return (-2);
 		return (-1);
