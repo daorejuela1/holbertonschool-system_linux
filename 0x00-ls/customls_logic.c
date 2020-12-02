@@ -1,5 +1,5 @@
 #include "customls.h"
-#define INVALID "hls: invalid option -- '%s'\n"
+#define INVALID "hls: unrecognized option '%s'\n"
 /**
  * parse_data - initialized dir_len
  * @argv: program arguments
