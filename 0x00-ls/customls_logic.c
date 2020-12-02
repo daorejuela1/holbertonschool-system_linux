@@ -48,3 +48,48 @@ void parse_data(char *argv[], c_per var)
 		}
 	}
 }
+
+/**
+ * ls_answer - reads the args to give an according answer
+ * @dir_name: directory name
+ * @ls_flag: ls_flags from argument
+ * @c_var: malloc data
+ *
+ * Return: last exit code in case of a mistake
+ **/
+int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var)
+{
+	int dir_len = 0;
+	/*data search*/
+	if (ls_flag.search_hidden)
+	{
+		dir_len = get_dirlen(dir_name, 1);
+		if (dir_len == -1)
+			return (-1);
+		*c_var.directories = get_dir_names(dir_name, dir_len, 1);
+	}
+	else if (ls_flag.search_myhidden)
+	{
+		dir_len = get_dirlen(dir_name, 2);
+		if (dir_len == -1)
+			return (-1);
+		*c_var.directories = get_dir_names(dir_name, dir_len, 2);
+	}
+	else
+	{
+	dir_len = get_dirlen(dir_name, 3);
+		if (dir_len == -1)
+			return (-1);
+		*c_var.directories = get_dir_names(dir_name, dir_len, 3);
+	printf("Coming soon\n");
+	}
+	/*data sort*/
+	/*data print*/
+	if (ls_flag.long_listing)
+		printf("Coming soon\n");
+	else if (ls_flag.print_below)
+		below_print(*c_var.directories);
+	else
+		normal_print(*c_var.directories);
+	return (dir_len == -1 ? 2 : 0);
+}

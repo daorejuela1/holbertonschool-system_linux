@@ -1,9 +1,9 @@
 #include "customls.h"
 /**
  * flag_setter - function to set flags by counting the arguments
- * @name: name of the dir
+ * @var: malloc variables
  *
- * Return: Number of files.
+ * Return: Structure with needed flags set.
  */
 arg_flags flag_setter(c_per var)
 {

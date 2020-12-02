@@ -21,6 +21,23 @@ int _strcmp(char *p1, char *p2)
 }
 
 /**
+ * _strfcmp - compares first char
+ * @p1: string to compare
+ * @p2: string to compare
+ * Return: Always 0 on success
+ */
+int _strfcmp(char *p1, char *p2)
+{
+	const unsigned char *s1 = (const unsigned char *) p1;
+	const unsigned char *s2 = (const unsigned char *) p2;
+	unsigned char c1, c2;
+
+	c1 = (unsigned char) *s1++;
+	c2 = (unsigned char) *s2++;
+	return (c1 - c2);
+}
+
+/**
   *_strncpy - merge  two strings
   *
   *@dest: second string
