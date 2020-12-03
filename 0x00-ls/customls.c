@@ -114,7 +114,7 @@ int separate_files(c_per c_vars, s_str s_sep, free_mem free_m)
 		else
 		{
 			*(*s_sep.folder_alloc + folder_c) =
-				_calloc(_strlen(dir_name) + 1, 1, free_m);
+			_calloc(_strlen(dir_name) + 1, 1, free_m);
 			_strncpy(*(*s_sep.folder_alloc + folder_c++), dir_name, _strlen(dir_name));
 		}
 	}
@@ -143,10 +143,10 @@ int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem)
 		exit_code = 2;
 	}
 	free_grid(*s_sep.error_alloc, *s_sep.error_len);
-	for (i = 0; i < *s_sep.file_len; i++)
+	if (*s_sep.file_len)
 	{
 		dir_name = *(*s_sep.file_alloc + i);
-		ls_answer(dir_name, ls_flags, c_vars, 1, mem);
+		ls_answer(dir_name, ls_flags, c_vars, -1, mem);
 	}
 	free_grid(*s_sep.file_alloc, *s_sep.file_len);
 	if (*s_sep.folder_len && *s_sep.file_len)

@@ -91,7 +91,7 @@ typedef struct free_m
 } free_mem;
 
 extern int errno;
-void normal_print(char **filenames);
+void normal_print(char **filenames, int mode, free_mem mem);
 int get_dirlen(char *name, int selector);
 DIR *_opendir_safe(char *name, int mode);
 int _strcmp(char *p1, char *p2);
@@ -104,10 +104,10 @@ void parse_data(char *argv[], free_mem variables);
 char **get_dir_names(char *name, int dir_len, int selector, free_mem mem);
 arg_flags flag_setter(c_per variables);
 int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple, free_mem mem);
-void below_print(char **filenames);
 int _strfcmp(char *p1, char *p2);
 int gets_valid(char **fold_names);
 int separate_files(c_per c_vars, s_str s_sep, free_mem free_m);
 int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem);
 void *_calloc(unsigned int nmemb, unsigned int size, free_mem mem);
+void below_print(char **filenames, int mode, free_mem mem);
 #endif
