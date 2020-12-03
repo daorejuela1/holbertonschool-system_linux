@@ -88,13 +88,12 @@ void long_listing(char *dir_name, char **filenames, int mode, free_mem mem)
 		sprintf(buffer, "%s", printvar[i]);
 	if (lstat(buffer, &sb) == -1)
 	{
-		printf("VALOR: %s\n", dir_name);
 		perror("aqui es el error stat");
 		exit(EXIT_FAILURE);
 	}
 	print_file_type(sb);
 	print_permissions(sb);
-	print_data_state(printvar[i], sb, mem);
+	print_data_state(buffer, sb, mem);
 		}
 	free_grid(filenames, dir_len);
 }
@@ -182,7 +181,7 @@ void print_data_state(char *printvar, struct stat sb, free_mem mem)
 		r = readlink(printvar, linkname, sb.st_size + 1);
 		if (r < 0 || r > sb.st_size)
 		{
-			fprintf(stderr, "symlink err()\n");
+			fprintf(stderr, "symlink err(%s)\n", printvar);
 			exit(EXIT_FAILURE);
 		}
 		linkname[sb.st_size] = '\0';
