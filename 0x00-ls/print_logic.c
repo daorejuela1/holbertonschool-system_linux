@@ -93,7 +93,7 @@ void long_listing(char *dir_name, char **filenames, int mode, free_mem mem)
 	}
 	print_file_type(sb);
 	print_permissions(sb);
-	print_data_state(buffer, sb, mem);
+	print_data_state(buffer, printvar[i], sb, mem);
 		}
 	free_grid(filenames, dir_len);
 }
@@ -145,12 +145,13 @@ void print_permissions(struct stat sb)
 }
 /**
  * print_data_state - prints extra information about a file
- * @printvar: file name
+ * @printvar: file name with path
+ * @name: file name alone
  * @sb: structure with file information
  * @mem: structure to free memory in case of error
  * Return: None
  */
-void print_data_state(char *printvar, struct stat sb, free_mem mem)
+void print_data_state(char *printvar, char *name, struct stat sb, free_mem mem)
 {
 	struct passwd *pwd;
 	struct group *grp;
@@ -172,7 +173,7 @@ void print_data_state(char *printvar, struct stat sb, free_mem mem)
 	printf("%ld ", (long) sb.st_size);
 	file_time = ctime(&sb.st_mtime);
 	printf("%.12s ", file_time + 4);
-	printf("%s", printvar);
+	printf("%s", name);
 	if ((sb.st_mode & S_IFMT) != S_IFLNK)
 		printf("\n");
 	else

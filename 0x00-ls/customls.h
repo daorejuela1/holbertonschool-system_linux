@@ -114,6 +114,6 @@ void *_calloc(unsigned int nmemb, unsigned int size, free_mem mem);
 void below_print(char **filenames, int mode, free_mem mem);
 void print_permissions(struct stat sb);
 void long_listing(char *dir_name, char **filenames, int mode, free_mem mem);
-void print_data_state(char *printvar, struct stat sb, free_mem mem);
 void print_file_type(struct stat sb);
+void print_data_state(char *pvar, char *name, struct stat sb, free_mem mem);
 #endif
