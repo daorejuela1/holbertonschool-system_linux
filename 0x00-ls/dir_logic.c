@@ -116,3 +116,39 @@ char **get_dir_names(char *name, int dir_len, int selector, free_mem mem)
 	closedir(directory);
 	return (files);
 }
+
+/**
+ * print_file_type - prints the type of a file
+ * @sb: structure with file information
+ * Return: None
+ */
+void print_file_type(struct stat sb)
+{
+	switch (sb.st_mode & S_IFMT)
+	{
+	case S_IFBLK:
+		printf("b");
+		break;
+	case S_IFCHR:
+		printf("c");
+		break;
+	case S_IFDIR:
+		printf("d");
+		break;
+	case S_IFIFO:
+		printf("p");
+		break;
+	case S_IFLNK:
+		printf("l");
+		break;
+	case S_IFREG:
+		printf("-");
+		break;
+	case S_IFSOCK:
+		printf("n");
+		break;
+	default:
+		printf("-");
+		break;
+	}
+}

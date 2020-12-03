@@ -88,7 +88,7 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var,
 	if ((*mem.sep.folder_len >= 2 && dir_len != -2) || multiple == 1)
 		printf("%s:\n", dir_name);
 	if (ls_flag.long_listing)
-		printf("Coming soon\n");
+		long_listing(dir_name, *c_var.directories, multiple, mem);
 	else if (ls_flag.print_below)
 		below_print(*c_var.directories, multiple, mem);
 	else

@@ -5,7 +5,12 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <pwd.h>
+#include <grp.h>
 #include <errno.h>
+#include <unistd.h>
 /**
  * struct modifier_params - singly linked list
  * @print_below: flag to store if a below printing is in order
@@ -75,12 +80,8 @@ typedef struct separate
 
 /**
  * struct free_m - nested struct to free memory in error cases
- * @error_alloc: list of arguments
- * @file_alloc: list of filenames get by argument
- * @folder_alloc: list of directories inside a folder
- * @file_len: len of filenames
- * @folder_len: len of arguments
- * @error_len: len of directories
+ * @sep: structure with filtered arguments
+ * @c_var: structure with raw inputs
  *
  * Description: This structure defines the mem allocs
  */
@@ -103,11 +104,16 @@ char *_memset(char *s, char b, unsigned int n);
 void parse_data(char *argv[], free_mem variables);
 char **get_dir_names(char *name, int dir_len, int selector, free_mem mem);
 arg_flags flag_setter(c_per variables);
-int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple, free_mem mem);
+int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var,
+		int multiple, free_mem mem);
 int _strfcmp(char *p1, char *p2);
 int gets_valid(char **fold_names);
 int separate_files(c_per c_vars, s_str s_sep, free_mem free_m);
 int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem);
 void *_calloc(unsigned int nmemb, unsigned int size, free_mem mem);
 void below_print(char **filenames, int mode, free_mem mem);
+void print_permissions(struct stat sb);
+void long_listing(char *dir_name, char **filenames, int mode, free_mem mem);
+void print_data_state(char *printvar, struct stat sb, free_mem mem);
+void print_file_type(struct stat sb);
 #endif
