@@ -18,9 +18,10 @@ void free_grid(char **grid, int height)
  *_calloc - using calloc with malloc
  *@nmemb: number of entries
  *@size: bytes of the entry
+ *@mem: structure with allocs to free in case of error
  *Return: 0
  */
-void *_calloc(unsigned int nmemb, unsigned int size)
+void *_calloc(unsigned int nmemb, unsigned int size, free_mem mem)
 {
 	char *pointer;
 
@@ -28,7 +29,21 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 		return (NULL);
 	pointer = malloc(nmemb * size);
 	if (pointer == NULL)
-		return (NULL);
+	{
+		if (*mem.c_var.arguments)
+			free(mem.c_var.arguments);
+		if (*mem.c_var.filenames)
+			free_grid(*mem.c_var.filenames, *mem.c_var.file_len);
+		if (*mem.c_var.directories)
+			free_grid(*mem.c_var.directories, *mem.c_var.dir_len);
+		if (*mem.sep.error_alloc)
+			free_grid(*mem.sep.error_alloc, *mem.sep.error_len);
+		if (*mem.sep.file_alloc)
+			free_grid(*mem.sep.file_alloc, *mem.sep.file_len);
+		if (*mem.sep.folder_alloc)
+			free_grid(*mem.sep.folder_alloc, *mem.sep.folder_len);
+		exit(2);
+	}
 	pointer = _memset(pointer, 0, nmemb * size);
 	return ((void *)pointer);
 }

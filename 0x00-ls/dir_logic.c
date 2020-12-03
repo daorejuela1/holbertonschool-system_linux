@@ -76,9 +76,10 @@ DIR *_opendir_safe(char *name, int mode)
  * @name: name of the dir
  * @dir_len: quantity of files in directory
  * @selector: conditional selector
+ * @mem: structure with allocs to free
  * Return: matrix with all the normal directory names.
  */
-char **get_dir_names(char *name, int dir_len, int selector)
+char **get_dir_names(char *name, int dir_len, int selector, free_mem mem)
 {
 	int i = 0, condition = 0;
 	DIR *directory;
@@ -90,13 +91,13 @@ char **get_dir_names(char *name, int dir_len, int selector)
 	{
 		if (errno == 20)
 		{
-			files = _calloc(2, sizeof(char *));
-			files[0] = _calloc(_strlen(name) + 1, 1);
+			files = _calloc(2, sizeof(char *), mem);
+			files[0] = _calloc(_strlen(name) + 1, 1, mem);
 			_strncpy(files[0], name, _strlen(name));
 			return (files);
 		}
 	}
-	files = _calloc(dir_len + 1, sizeof(char *));
+	files = _calloc(dir_len + 1, sizeof(char *), mem);
 	while ((read = readdir(directory)) != NULL)
 	{
 		if (selector == 1)
@@ -107,7 +108,7 @@ char **get_dir_names(char *name, int dir_len, int selector)
 			condition = SHOW;
 		if (condition)
 		{
-			files[i] = _calloc(_strlen(read->d_name) + 1, 1);
+			files[i] = _calloc(_strlen(read->d_name) + 1, 1, mem);
 			_strncpy(files[i], read->d_name, _strlen(read->d_name));
 			i++;
 		}

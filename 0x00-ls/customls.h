@@ -73,6 +73,22 @@ typedef struct separate
 	int *folder_len;
 } s_str;
 
+/**
+ * struct free_m - nested struct to free memory in error cases
+ * @error_alloc: list of arguments
+ * @file_alloc: list of filenames get by argument
+ * @folder_alloc: list of directories inside a folder
+ * @file_len: len of filenames
+ * @folder_len: len of arguments
+ * @error_len: len of directories
+ *
+ * Description: This structure defines the mem allocs
+ */
+typedef struct free_m
+{
+	s_str sep;
+	c_per c_var;
+} free_mem;
 
 extern int errno;
 void normal_print(char **filenames);
@@ -83,15 +99,15 @@ char *_strncpy(char *dest, char *src, int n);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 void free_grid(char **grid, int height);
-void *_calloc(unsigned int nmemb, unsigned int size);
 char *_memset(char *s, char b, unsigned int n);
-void parse_data(char *argv[], c_per variables);
-char **get_dir_names(char *name, int dir_len, int selector);
+void parse_data(char *argv[], free_mem variables);
+char **get_dir_names(char *name, int dir_len, int selector, free_mem mem);
 arg_flags flag_setter(c_per variables);
-int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple);
+int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple, free_mem mem);
 void below_print(char **filenames);
 int _strfcmp(char *p1, char *p2);
 int gets_valid(char **fold_names);
-int separate_files(c_per c_vars, s_str s_sep);
-int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep);
+int separate_files(c_per c_vars, s_str s_sep, free_mem free_m);
+int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem);
+void *_calloc(unsigned int nmemb, unsigned int size, free_mem mem);
 #endif
