@@ -16,11 +16,14 @@ void parse_data(char *argv[], free_mem mem)
 	{
 		if (*argv[i] == '-' && (argv[i][1]) == '-')
 		{
-			fprintf(stderr, INVALID, argv[i]);
-			fprintf(stderr, "Try 'hls --help' for more information.\n");
-			exit(2);
+			if (argv[i][2] != 0)
+			{
+				fprintf(stderr, INVALID, argv[i]);
+				fprintf(stderr, "Try 'hls --help' for more information.\n");
+				exit(2);
+			}
 		}
-		if (*argv[i] == '-' && (argv[i][1]) != 0)
+		else if (*argv[i] == '-' && (argv[i][1]) != 0)
 		{
 			for (j = 1; j < _strlen(argv[i]); j++)
 				arg_len++;
@@ -34,13 +37,13 @@ void parse_data(char *argv[], free_mem mem)
 	*mem.c_var.file_len = file_len;
 	for (i = 1; argv[i] != NULL; i++)
 	{
-		if (*argv[i] == '-' && (argv[i][1]) != 0)
+		if (*argv[i] == '-' && (argv[i][1]) == '-' && (argv[i][2]) == 0)
+		{
+		}
+		else if (*argv[i] == '-' && (argv[i][1]) != 0)
 		{
 			for (j = 1; j < _strlen(argv[i]); j++)
-			{
-				*(*mem.c_var.arguments + arg_count) = argv[i][j];
-				arg_count++;
-			}
+				*(*mem.c_var.arguments + arg_count++) = argv[i][j];
 		}
 		else
 		{
