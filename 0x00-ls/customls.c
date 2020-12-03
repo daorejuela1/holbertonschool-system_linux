@@ -145,7 +145,7 @@ int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem)
 	free_grid(*s_sep.error_alloc, *s_sep.error_len);
 	if (*s_sep.file_len)
 	{
-		dir_name = *(*s_sep.file_alloc + i);
+		dir_name = *(*s_sep.file_alloc);
 		ls_answer(dir_name, ls_flags, c_vars, -1, mem);
 	}
 	free_grid(*s_sep.file_alloc, *s_sep.file_len);

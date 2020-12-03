@@ -10,7 +10,7 @@
 void parse_data(char *argv[], free_mem mem)
 {
 	int i = 0, arg_len = 0, file_len = 0, j = 0, counter = 0;
-	int filestr_len = 0, arg_count = 0;
+	int	filestr_len = 0, arg_count = 0;
 
 	for (i = 1; argv[i] != NULL; i++)
 	{
@@ -24,10 +24,8 @@ void parse_data(char *argv[], free_mem mem)
 			}
 		}
 		else if (*argv[i] == '-' && (argv[i][1]) != 0)
-		{
 			for (j = 1; j < _strlen(argv[i]); j++)
 				arg_len++;
-		}
 		else
 			file_len++;
 	}
@@ -41,10 +39,8 @@ void parse_data(char *argv[], free_mem mem)
 		{
 		}
 		else if (*argv[i] == '-' && (argv[i][1]) != 0)
-		{
 			for (j = 1; j < _strlen(argv[i]); j++)
 				*(*mem.c_var.arguments + arg_count++) = argv[i][j];
-		}
 		else
 		{
 			filestr_len = _strlen(argv[i]) + 1;
@@ -94,9 +90,9 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var,
 	if (ls_flag.long_listing)
 		printf("Coming soon\n");
 	else if (ls_flag.print_below)
-		below_print(*c_var.directories, *mem.sep.folder_len, mem);
+		below_print(*c_var.directories, multiple, mem);
 	else
-		normal_print(*c_var.directories, *mem.sep.folder_len, mem);
+		normal_print(*c_var.directories, multiple, mem);
 	if (*c_var.dir_len + 1 != *mem.sep.folder_len &&
 			*mem.sep.folder_len >= 2 && dir_len != -2)
 		printf("\n");
