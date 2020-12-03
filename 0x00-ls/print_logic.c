@@ -163,12 +163,12 @@ void print_data_state(char *printvar, struct stat sb, free_mem mem)
 	if (pwd)
 		printf("%s ", pwd->pw_name);
 	else
-		printf(" ");
+		printf("%d ", sb.st_uid);
 	grp = getgrgid(sb.st_gid);
 	if (grp)
 		printf("%s ", grp->gr_name);
 	else
-		printf(" ");
+		printf("%d ", sb.st_gid);
 	printf("%ld ", (long) sb.st_size);
 	file_time = ctime(&sb.st_mtime);
 	printf("%.12s ", file_time + 4);
