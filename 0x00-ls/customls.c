@@ -134,7 +134,7 @@ int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem)
 {
 	char *dir_name;
 	int exit_code = 0;
-	int i = 0;
+	int i = 0, multiple = 0;
 
 	for (i = 0; i < *s_sep.error_len; i++)
 	{
@@ -151,10 +151,13 @@ int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep, free_mem mem)
 	free_grid(*s_sep.file_alloc, *s_sep.file_len);
 	if (*s_sep.folder_len && *s_sep.file_len)
 		printf("\n");
+	if ((*s_sep.file_len > 0 && *s_sep.folder_len == 1) ||
+			(*s_sep.error_len > 0 && *s_sep.folder_len == 1))
+		multiple = 1;
 	for (i = 0; i < *s_sep.folder_len; i++)
 	{
 		dir_name = *(*s_sep.folder_alloc + i);
-		ls_answer(dir_name, ls_flags, c_vars, *s_sep.folder_len, mem);
+		ls_answer(dir_name, ls_flags, c_vars, multiple, mem);
 		*c_vars.dir_len = *c_vars.dir_len + 1;
 	}
 	return (exit_code);

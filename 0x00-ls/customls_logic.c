@@ -86,15 +86,16 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var,
 			return (-1);
 		*c_var.directories = get_dir_names(dir_name, dir_len, 3, mem);
 	}
-	if (multiple >= 2 && dir_len != -2)
+	if ((*mem.sep.folder_len >= 2 && dir_len != -2) || multiple == 1)
 		printf("%s:\n", dir_name);
 	if (ls_flag.long_listing)
 		printf("Coming soon\n");
 	else if (ls_flag.print_below)
-		below_print(*c_var.directories, multiple, mem);
+		below_print(*c_var.directories, *mem.sep.folder_len, mem);
 	else
-		normal_print(*c_var.directories, multiple, mem);
-	if (*c_var.dir_len + 1 != multiple && multiple >= 2 && dir_len != -2)
+		normal_print(*c_var.directories, *mem.sep.folder_len, mem);
+	if (*c_var.dir_len + 1 != *mem.sep.folder_len &&
+			*mem.sep.folder_len >= 2 && dir_len != -2)
 		printf("\n");
 	return (dir_len == -1 ? 2 : 0);
 }
