@@ -166,11 +166,11 @@ void print_data_state(char *printvar, struct stat sb, free_mem mem)
 		printf(" ");
 	grp = getgrgid(sb.st_gid);
 	if (grp)
-		printf(" ");
+		printf("%s ", grp->gr_name);
 	else
-		printf("%d ", sb.st_gid);
+		printf(" ");
 	printf("%ld ", (long) sb.st_size);
-	file_time = ctime(&sb.st_atime);
+	file_time = ctime(&sb.st_mtime);
 	printf("%.12s ", file_time + 4);
 	printf("%s", printvar);
 	if ((sb.st_mode & S_IFMT) != S_IFLNK)
