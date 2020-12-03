@@ -52,6 +52,27 @@ typedef struct c_alloc
 	int *dir_len;
 } c_per;
 
+/**
+ * struct separate - separate memory variables
+ * @error_alloc: list of arguments
+ * @file_alloc: list of filenames get by argument
+ * @folder_alloc: list of directories inside a folder
+ * @file_len: len of filenames
+ * @folder_len: len of arguments
+ * @error_len: len of directories
+ *
+ * Description: This structure defines the mem allocs
+ */
+typedef struct separate
+{
+	char ***error_alloc;
+	int *error_len;
+	char ***file_alloc;
+	int *file_len;
+	char ***folder_alloc;
+	int *folder_len;
+} s_str;
+
 
 extern int errno;
 void normal_print(char **filenames);
@@ -71,4 +92,6 @@ int ls_answer(char *dir_name, arg_flags ls_flag, c_per c_var, int multiple);
 void below_print(char **filenames);
 int _strfcmp(char *p1, char *p2);
 int gets_valid(char **fold_names);
+int separate_files(c_per c_vars, s_str s_sep);
+int scan_in_order(arg_flags ls_flags, c_per c_vars, s_str s_sep);
 #endif

@@ -27,7 +27,7 @@ int get_dirlen(char *name, int selector)
 	}
 	while ((read = readdir(directory)) != NULL)
 	{
-		if (selector == 1 || selector == 4)
+		if (selector == 1 || selector == 4 || selector == 5)
 			condition = SHOW_ALL;
 		else if (selector == 2)
 			condition = SHOW_ALL && M;
@@ -53,7 +53,7 @@ DIR *_opendir_safe(char *name, int mode)
 	DIR *directory = opendir(name);
 	int errnum;
 
-	if (directory == NULL && mode != 4)
+	if ((directory == NULL && mode != 4) && (directory == NULL && mode != 5))
 	{
 		errnum = errno;
 		switch (errnum)
