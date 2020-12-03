@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	if (*(*c_vars.filenames) == NULL)
 	{
 		dir_name = DEFAULT;
-		dir_len = ls_answer(dir_name, ls_flags, c_vars, 1, free_m);
+		dir_len = ls_answer(dir_name, ls_flags, c_vars, 0, free_m);
 		if (dir_len == -1)
 			exit_code = 2;
 	}
