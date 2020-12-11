@@ -9,7 +9,8 @@
  */
 char *_getline(const int fd)
 {
-	int readed = 0, index = 0, repetitions = 0;
+	int readed = 0, index = 0;
+	static int repetitions;
 	char buffer[READ_SIZE + 1], *line = NULL, *temp = NULL;
 	static char *output;
 
@@ -40,10 +41,12 @@ char *_getline(const int fd)
 		{
 			free(output);
 			output = NULL;
+			repetitions = 0;
 		}
 		else
 		{
-			temp = strdup(output + index + 1);
+			temp = malloc(NEW_SIZE);
+			strcpy(temp, output + index + 1);
 			free(output);
 			output = temp;
 		}
@@ -51,13 +54,14 @@ char *_getline(const int fd)
 	}
 	if (output)
 	{
-	line = malloc(NEW_SIZE);
-	if (line == NULL)
-		return (NULL);
-	strcpy(line, output);
-	free(output);
-	output = NULL;
-	return (line);
+		line = malloc(NEW_SIZE);
+		if (line == NULL)
+			return (NULL);
+		strcpy(line, output);
+		free(output);
+		output = NULL;
+		return (line);
+		repetitions = 0;
 	}
 	return (NULL);
 }
