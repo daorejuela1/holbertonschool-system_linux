@@ -9,11 +9,9 @@
  */
 char *_getline(const int fd)
 {
-	int readed = 0, index = 0;
-	char buffer[READ_SIZE + 1];
-	char *line = NULL, *temp = NULL;
+	int readed = 0, index = 0, repetitions = 0;
+	char buffer[READ_SIZE + 1], *line = NULL, *temp = NULL;
 	static char *output;
-	int repetitions = 0;
 
 	do {
 		readed = read(fd, &buffer, READ_SIZE);
@@ -51,7 +49,17 @@ char *_getline(const int fd)
 		}
 		return (line);
 	}
-	return (output);
+	if (output)
+	{
+	line = malloc(NEW_SIZE);
+	if (line == NULL)
+		return (NULL);
+	strcpy(line, output);
+	free(output);
+	output = NULL;
+	return (line);
+	}
+	return (NULL);
 }
 /**
  * getindex - search for a character inside an array
