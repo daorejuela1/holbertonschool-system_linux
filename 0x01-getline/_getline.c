@@ -1,6 +1,8 @@
 #include "_getline.h"
 #define OLD_SIZE (((READ_SIZE + 1) * repetitions) + 1)
 #define NEW_SIZE (((READ_SIZE + 1) * (repetitions + 1)) + 1)
+static int repetitions;
+static char *output;
 /**
  * _getline - Gets a line from an input
  * @fd: file descriptor number
@@ -9,8 +11,6 @@
  */
 char *_getline(const int fd)
 {
-	static int repetitions;
-	static char *output;
 	int readed = 0, index = 0;
 	char buffer[READ_SIZE + 1], *line = NULL, *temp = NULL;
 
@@ -137,8 +137,6 @@ int _strlen(char *s)
 char *split_line(int index)
 {
 	char *line = NULL, *temp = NULL;
-	static int repetitions;
-	static char *output;
 
 	line = malloc(index + 1);
 	if (line == NULL)
