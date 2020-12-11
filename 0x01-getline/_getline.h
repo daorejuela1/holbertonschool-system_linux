@@ -4,14 +4,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#define READ_SIZE 512
+#define READ_SIZE 2
 
 /**
- * struct STREAM - struct to define each fd opened
+ * struct STREAM - struct to define each stream source
  *
- * @fd: file descriptor of the opened stream
- * @buffer: string that constains buffer data
- * @line: returned data
+ * @fd: file descriptor
+ * @buffer: store of actual read data
+ * @line: store of returned line
  */
 typedef struct STREAM
 {

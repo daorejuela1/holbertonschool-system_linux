@@ -9,10 +9,11 @@
  */
 char *_getline(const int fd)
 {
-	int readed = 0, index = 0, repetitions = 0;
+	int readed = 0, index = 0;
 	char buffer[READ_SIZE + 1];
 	char *line = NULL, *temp = NULL;
 	static char *output;
+	int repetitions = 0;
 
 	do {
 		readed = read(fd, &buffer, READ_SIZE);
