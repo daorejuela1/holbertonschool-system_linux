@@ -22,6 +22,8 @@ char *_getline(const int fd)
 		if (readed)
 		{
 			temp = _realloc(output, OLD_SIZE, NEW_SIZE);
+			if (temp == NULL)
+				return (NULL);
 			output = temp;
 			buffer[readed] = 0;
 			strcat(output, buffer);
@@ -32,6 +34,8 @@ char *_getline(const int fd)
 	if (index != -1 && output)
 	{
 		line = malloc(index + 1);
+		if (line == NULL)
+			return (NULL);
 		strncpy(line, output, index);
 		line[index] = 0;
 		if (*(output + index + 1) == 0)
@@ -41,8 +45,7 @@ char *_getline(const int fd)
 		}
 		else
 		{
-			temp = malloc(_strlen(output + index + 1) + 1);
-			strcpy(temp, output + index + 1);
+			temp = strdup(output + index + 1);
 			free(output);
 			output = temp;
 		}
