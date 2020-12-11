@@ -1,6 +1,8 @@
 #include "_getline.h"
 #define OLD_SIZE (((READ_SIZE + 1) * repetitions) + 1)
 #define NEW_SIZE (((READ_SIZE + 1) * (repetitions + 1)) + 1)
+static int repetitions;
+static char *output;
 /**
  * _getline - Gets a line from an input
  * @fd: file descriptor number
@@ -10,9 +12,7 @@
 char *_getline(const int fd)
 {
 	int readed = 0, index = 0;
-	static int repetitions;
 	char buffer[READ_SIZE + 1], *line = NULL, *temp = NULL;
-	static char *output;
 
 	do {
 		readed = read(fd, &buffer, READ_SIZE);
@@ -32,25 +32,7 @@ char *_getline(const int fd)
 	} while (readed == READ_SIZE && index == -1);
 	if (index != -1 && output)
 	{
-		line = malloc(index + 1);
-		if (line == NULL)
-			return (NULL);
-		strncpy(line, output, index);
-		line[index] = 0;
-		if (*(output + index + 1) == 0)
-		{
-			free(output);
-			output = NULL;
-			repetitions = 0;
-		}
-		else
-		{
-			temp = malloc(NEW_SIZE);
-			strcpy(temp, output + index + 1);
-			free(output);
-			output = temp;
-		}
-		return (line);
+		return (split_line(index));
 	}
 	if (output)
 	{
@@ -142,4 +124,37 @@ int _strlen(char *s)
 		counter++;
 	}
 	return (counter);
+}
+
+
+/**
+ *split_line - split line until new line character is found
+ *@index: index of current solution
+ *
+ *Return: String used by split line
+ *
+ */
+char *split_line(int index)
+{
+	char *line = NULL, *temp = NULL;
+
+	line = malloc(index + 1);
+	if (line == NULL)
+		return (NULL);
+	strncpy(line, output, index);
+	line[index] = 0;
+	if (*(output + index + 1) == 0)
+	{
+		free(output);
+		output = NULL;
+		repetitions = 0;
+	}
+	else
+	{
+		temp = malloc(NEW_SIZE);
+		strcpy(temp, output + index + 1);
+		free(output);
+		output = temp;
+	}
+	return (line);
 }
