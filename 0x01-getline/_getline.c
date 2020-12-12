@@ -36,9 +36,7 @@ char *_getline(const int fd)
 		index = getindex(current_file->output, 10);
 	} while (readed == READ_SIZE && index == -1);
 	if (index != -1 && current_file->output)
-	{
 		return (split_line(index));
-	}
 	if (current_file->output)
 	{
 		line = malloc(NEW_SIZE);
@@ -49,6 +47,7 @@ char *_getline(const int fd)
 		current_file->output = NULL;
 		return (line);
 	}
+	clean_files();
 	return (NULL);
 }
 /**
