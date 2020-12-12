@@ -1,8 +1,7 @@
 #include "_getline.h"
-#define OLD_SIZE (((READ_SIZE + 1) * repetitions) + 1)
-#define NEW_SIZE (((READ_SIZE + 1) * (repetitions + 1)) + 1)
-static int repetitions;
-static char *output;
+#define OLD_SIZE (((READ_SIZE + 1) * current_file->repetitions) + 1)
+#define NEW_SIZE (((READ_SIZE + 1) * ((current_file->repetitions) + 1)) + 1)
+static streamf *file, *current_file;
 /**
  * _getline - Gets a line from an input
  * @fd: file descriptor number
@@ -14,36 +13,41 @@ char *_getline(const int fd)
 	int readed = 0, index = 0;
 	char buffer[READ_SIZE + 1], *line = NULL, *temp = NULL;
 
+	if (fd == -1)
+	{
+		clean_files();
+		return (NULL);
+	}
+	handlefd(fd);
 	do {
-		readed = read(fd, &buffer, READ_SIZE);
+		readed = read(current_file->fd, &buffer, READ_SIZE);
 		if (readed == -1)
 			return (NULL);
 		if (readed)
 		{
-			temp = _realloc(output, OLD_SIZE, NEW_SIZE);
+			temp = _realloc(current_file->output, OLD_SIZE, NEW_SIZE);
 			if (temp == NULL)
 				return (NULL);
-			output = temp;
+			current_file->output = temp;
 			buffer[readed] = 0;
-			strcat(output, buffer);
-			repetitions++;
+			strcat(current_file->output, buffer);
+			current_file->repetitions = current_file->repetitions + 1;
 		}
-		index = getindex(output, 10);
+		index = getindex(current_file->output, 10);
 	} while (readed == READ_SIZE && index == -1);
-	if (index != -1 && output)
+	if (index != -1 && current_file->output)
 	{
 		return (split_line(index));
 	}
-	if (output)
+	if (current_file->output)
 	{
 		line = malloc(NEW_SIZE);
 		if (line == NULL)
 			return (NULL);
-		strcpy(line, output);
-		free(output);
-		output = NULL;
+		strcpy(line, current_file->output);
+		free(current_file->output);
+		current_file->output = NULL;
 		return (line);
-		repetitions = 0;
 	}
 	return (NULL);
 }
@@ -77,7 +81,7 @@ int getindex(char *array, char chr)
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	char *array;
+	char *array = NULL;
 	unsigned int minimum, i;
 
 	if (new_size == old_size)
@@ -109,21 +113,36 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 }
 
 /**
- *_strlen - returns data len
- *@s: input string
+ *handlefd - returns saved stream or created stream if not found
+ *@fd: file descriptor number
  *
- *Return:an int number
+ *Return: NULL if something failed
  *
  */
-int _strlen(char *s)
+char *handlefd(int fd)
 {
-	int counter = 0;
+	streamf *initial = NULL;
 
-	while (*(s + counter) != 0)
+	current_file = file;
+	initial = file;
+	while (current_file)
 	{
-		counter++;
+		if (fd == current_file->fd)
+			break;
+		current_file = current_file->next;
 	}
-	return (counter);
+	if (!current_file)
+	{
+		file = malloc(sizeof(streamf));
+		if (!file)
+			return (NULL);
+		file->next = initial;
+		file->fd = fd;
+		file->output = NULL;
+		file->repetitions = 0;
+		current_file = file;
+	}
+	return (file->output);
 }
 
 
@@ -141,20 +160,37 @@ char *split_line(int index)
 	line = malloc(index + 1);
 	if (line == NULL)
 		return (NULL);
-	strncpy(line, output, index);
+	strncpy(line, current_file->output, index);
 	line[index] = 0;
-	if (*(output + index + 1) == 0)
+	if (*(current_file->output + index + 1) == 0)
 	{
-		free(output);
-		output = NULL;
-		repetitions = 0;
+		free(current_file->output);
+		current_file->output = NULL;
+		current_file->repetitions = 0;
 	}
 	else
 	{
 		temp = malloc(NEW_SIZE);
-		strcpy(temp, output + index + 1);
-		free(output);
-		output = temp;
+		strcpy(temp, current_file->output + index + 1);
+		free(current_file->output);
+		current_file->output = temp;
 	}
 	return (line);
+}
+
+/**
+ *clean_files - cleans all files allocs
+ */
+void clean_files(void)
+{
+	streamf *temp;
+
+	while (file)
+	{
+		temp = file->next;
+		if (file->output)
+			free(file->output);
+		free(file);
+		file = temp;
+	}
 }
