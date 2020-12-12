@@ -28,5 +28,5 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _strlen(char *s);
 char *split_line(int index);
 void clean_files(void);
-char *handlefd(int fd);
+streamf *handlefd(int fd);
 #endif

@@ -18,7 +18,8 @@ char *_getline(const int fd)
 		clean_files();
 		return (NULL);
 	}
-	handlefd(fd);
+	if (!handlefd(fd))
+		return (NULL);
 	do {
 		readed = read(current_file->fd, &buffer, READ_SIZE);
 		if (readed == -1)
@@ -118,7 +119,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  *Return: NULL if something failed
  *
  */
-char *handlefd(int fd)
+streamf *handlefd(int fd)
 {
 	streamf *initial = NULL;
 
@@ -141,7 +142,7 @@ char *handlefd(int fd)
 		file->repetitions = 0;
 		current_file = file;
 	}
-	return (file->output);
+	return (file);
 }
 
 
