@@ -43,9 +43,9 @@ char *_getline(const int fd)
 		line = malloc(OLD_SIZE + 1);
 		if (line == NULL)
 			return (NULL);
-		memcpy(line, current_file->output, NEW_SIZE);
-		line[OLD_SIZE] = 0;
-		free(current_file->output);
+		memcpy(line, current_file->output, OLD_SIZE), line[OLD_SIZE] = 0;
+		OLD_SIZE = 0, free(current_file->output);
+		current_file->output = NULL;
 		return (line);
 	}
 	clean_files();
