@@ -1,6 +1,6 @@
 #include "_getline.h"
-#define OLD_SIZE (((READ_SIZE + 1) * current_file->repetitions) + 1)
-#define NEW_SIZE (((READ_SIZE + 1) * ((current_file->repetitions) + 1)) + 1)
+#define OLD_SIZE (current_file->old_size)
+#define NEW_SIZE (current_file->readed + OLD_SIZE)
 static streamf *file, *current_file;
 /**
  * _getline - Gets a line from an input
@@ -26,26 +26,26 @@ char *_getline(const int fd)
 			return (NULL);
 		if (readed)
 		{
+			file->readed = readed;
 			temp = _realloc(current_file->output, OLD_SIZE, NEW_SIZE);
 			if (temp == NULL)
 				return (NULL);
 			current_file->output = temp;
-			buffer[readed] = 0;
-			strcat(current_file->output, buffer);
-			current_file->repetitions = current_file->repetitions + 1;
+			memcpy(current_file->output + OLD_SIZE, buffer, file->readed);
+			OLD_SIZE = NEW_SIZE;
 		}
 		index = getindex(current_file->output, 10);
 	} while (readed == READ_SIZE && index == -1);
 	if (index != -1 && current_file->output)
 		return (split_line(index));
-	if (current_file->output)
+	if (OLD_SIZE)
 	{
-		line = malloc(NEW_SIZE);
+		line = malloc(OLD_SIZE + 1);
 		if (line == NULL)
 			return (NULL);
-		strcpy(line, current_file->output);
+		memcpy(line, current_file->output, NEW_SIZE);
+		line[OLD_SIZE] = 0;
 		free(current_file->output);
-		current_file->output = NULL;
 		return (line);
 	}
 	clean_files();
@@ -55,21 +55,30 @@ char *_getline(const int fd)
  * getindex - search for a character inside an array
  * @array: array to search the character from
  * @chr: character to search for
- *
  * Return: index of the chr in array or -1 if not found
  */
 int getindex(char *array, char chr)
 {
-	int index = 0;
+	int index = 0, first_found = 1, ret_index = -1;
 
 	if (!array)
 		return (-1);
-	for (index = 0; *(array + index); index++)
+	current_file->total_newlines = 0;
+	for (index = 0; index < OLD_SIZE; index++)
 	{
 		if (array[index] == chr)
-			return (index);
+		{
+			if (current_file->first_time)
+			current_file->total_newlines =  current_file->total_newlines + 1;
+			if (first_found)
+			{
+				ret_index = index;
+				first_found = 0;
+			}
+		}
 	}
-	return (-1);
+	current_file->first_time = 0;
+	return (ret_index);
 }
 
 /**
@@ -139,7 +148,11 @@ streamf *handlefd(int fd)
 		file->next = initial;
 		file->fd = fd;
 		file->output = NULL;
-		file->repetitions = 0;
+		file->old_size = 0;
+		file->readed = 0;
+		file->first_time = 1;
+		file->total_newlines = 0;
+		file->index_count = 0;
 		current_file = file;
 	}
 	return (file);
@@ -160,18 +173,24 @@ char *split_line(int index)
 	line = malloc(index + 1);
 	if (line == NULL)
 		return (NULL);
-	strncpy(line, current_file->output, index);
+	memcpy(line, current_file->output, index);
 	line[index] = 0;
-	if (*(current_file->output + index + 1) == 0)
+	current_file->index_count = 1 + current_file->index_count;
+	if (current_file->index_count == current_file->total_newlines - 1)
 	{
 		free(current_file->output);
 		current_file->output = NULL;
-		current_file->repetitions = 0;
+		current_file->old_size = 0;
+		current_file->readed = 0;
+		current_file->index_count = 0;
+		current_file->total_newlines = 0;
+		current_file->first_time = 1;
 	}
 	else
 	{
-		temp = malloc(NEW_SIZE);
-		strcpy(temp, current_file->output + index + 1);
+		OLD_SIZE = OLD_SIZE - index - 1;
+		temp = malloc(OLD_SIZE);
+		memcpy(temp, current_file->output + index + 1, OLD_SIZE);
 		free(current_file->output);
 		current_file->output = temp;
 	}

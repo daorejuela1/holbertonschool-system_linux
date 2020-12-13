@@ -11,14 +11,22 @@
  *
  * @fd: file descriptor
  * @output: store of actual read data
- * @repetitions: stores if the buffer needs to be increased in the next read
+ * @readed: stores the quantity of bytes readed
+ * @old_size: stores the old size of the buffer reads
+ * @index_count: accumulator of index displacements
+ * @total_newlines: total displacements in one buffer
+ * @first_time: flag to check if the total number of new lines is taking in
  * @next: pointer to the next stream
  */
 typedef struct STREAM
 {
 	int fd;
 	char *output;
-	int repetitions;
+	int readed;
+	int old_size;
+	int index_count;
+	int total_newlines;
+	int first_time;
 	struct STREAM *next;
 } streamf;
 
