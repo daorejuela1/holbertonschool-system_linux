@@ -214,6 +214,4 @@ void clean_files(void)
 		free(file);
 		file = temp;
 	}
-	file = NULL;
-	current_file = NULL;
 }
