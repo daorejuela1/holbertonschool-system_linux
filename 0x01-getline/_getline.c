@@ -48,7 +48,6 @@ char *_getline(const int fd)
 		current_file->output = NULL;
 		return (line);
 	}
-	clean_files();
 	return (NULL);
 }
 /**
