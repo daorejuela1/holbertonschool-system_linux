@@ -26,7 +26,7 @@ char *_getline(const int fd)
 			return (NULL);
 		if (readed)
 		{
-			file->readed = readed;
+			current_file->readed = readed;
 			temp = _realloc(current_file->output, OLD_SIZE, NEW_SIZE);
 			if (temp == NULL)
 				return (NULL);
