@@ -59,7 +59,7 @@ char *_getline(const int fd)
  */
 int getindex(char *array, char chr)
 {
-	int index = 0, first_found = 1, ret_index = -1;
+	unsigned int index = 0, first_found = 1, ret_index = -1;
 
 	if (!array)
 		return (-1);
@@ -128,7 +128,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  *Return: NULL if something failed
  *
  */
-streamf *handlefd(int fd)
+streamf *handlefd(unsigned int fd)
 {
 	streamf *initial = NULL;
 

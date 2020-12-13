@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#define READ_SIZE 1024
+#define READ_SIZE 512
 
 /**
  * struct STREAM - struct to define each stream source
@@ -20,13 +20,13 @@
  */
 typedef struct STREAM
 {
-	int fd;
+	unsigned int fd;
+	unsigned int readed;
+	unsigned int old_size;
+	unsigned int index_count;
+	unsigned int total_newlines;
+	char first_time;
 	char *output;
-	int readed;
-	int old_size;
-	int index_count;
-	int total_newlines;
-	int first_time;
 	struct STREAM *next;
 } streamf;
 
@@ -36,5 +36,5 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _strlen(char *s);
 char *split_line(int index);
 void clean_files(void);
-streamf *handlefd(int fd);
+streamf *handlefd(unsigned int fd);
 #endif
