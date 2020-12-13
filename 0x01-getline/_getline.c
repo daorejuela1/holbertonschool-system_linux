@@ -190,6 +190,8 @@ char *split_line(int index)
 	{
 		OLD_SIZE = OLD_SIZE - index - 1;
 		temp = malloc(OLD_SIZE);
+		if (!temp)
+			return (NULL)
 		memcpy(temp, current_file->output + index + 1, OLD_SIZE);
 		free(current_file->output);
 		current_file->output = temp;
