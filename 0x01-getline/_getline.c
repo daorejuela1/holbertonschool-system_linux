@@ -32,7 +32,7 @@ char *_getline(const int fd)
 				return (NULL);
 			current_file->output = temp;
 			memcpy(current_file->output + OLD_SIZE, buffer, current_file->readed);
-			OLD_SIZE = NEW_SIZE;
+			OLD_SIZE = NEW_SIZE, current_file->first_time = 1;
 		}
 		index = getindex(current_file->output, 10);
 	} while (current_file->readed == READ_SIZE && index == -1);
@@ -64,7 +64,10 @@ int getindex(char *array, char chr)
 	if (!array)
 		return (-1);
 	if (current_file->first_time)
+	{
 		current_file->total_newlines = 0;
+		current_file->index_count = 0;
+	}
 	for (index = 0; index < OLD_SIZE; index++)
 	{
 		if (array[index] == chr)
