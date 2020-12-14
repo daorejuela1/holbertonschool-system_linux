@@ -63,13 +63,14 @@ int getindex(char *array, char chr)
 
 	if (!array)
 		return (-1);
-	current_file->total_newlines = 0;
+	if (current_file->first_time)
+		current_file->total_newlines = 0;
 	for (index = 0; index < OLD_SIZE; index++)
 	{
 		if (array[index] == chr)
 		{
 			if (current_file->first_time)
-			current_file->total_newlines =  current_file->total_newlines + 1;
+			current_file->total_newlines = current_file->total_newlines + 1;
 			if (first_found)
 			{
 				ret_index = index;
@@ -210,8 +211,13 @@ void clean_files(void)
 	{
 		temp = file->next;
 		if (file->output)
+		{
 			free(file->output);
+			file->output = NULL;
+		}
 		free(file);
 		file = temp;
 	}
+	current_file = NULL;
+	file = NULL;
 }
