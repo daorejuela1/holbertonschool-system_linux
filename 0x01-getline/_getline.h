@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#define READ_SIZE 2
+#define READ_SIZE 512
 
 /**
  * struct STREAM - struct to define each stream source
@@ -13,9 +13,6 @@
  * @output: store of actual read data
  * @readed: stores the quantity of bytes readed
  * @old_size: stores the old size of the buffer reads
- * @index_count: accumulator of index displacements
- * @total_newlines: total displacements in one buffer
- * @first_time: flag to check if the total number of new lines is taking in
  * @next: pointer to the next stream
  */
 typedef struct STREAM
@@ -23,9 +20,6 @@ typedef struct STREAM
 	unsigned int fd;
 	unsigned int readed;
 	unsigned int old_size;
-	unsigned int index_count;
-	unsigned int total_newlines;
-	char first_time;
 	char *output;
 	struct STREAM *next;
 } streamf;

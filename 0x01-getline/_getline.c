@@ -32,7 +32,7 @@ char *_getline(const int fd)
 				return (NULL);
 			current_file->output = temp;
 			memcpy(current_file->output + OLD_SIZE, buffer, current_file->readed);
-			OLD_SIZE = NEW_SIZE, current_file->first_time = 1;
+			OLD_SIZE = NEW_SIZE;
 		}
 		index = getindex(current_file->output, 10);
 	} while (current_file->readed == READ_SIZE && index == -1);
@@ -63,17 +63,10 @@ int getindex(char *array, char chr)
 
 	if (!array)
 		return (-1);
-	if (current_file->first_time)
-	{
-		current_file->total_newlines = 0;
-		current_file->index_count = 0;
-	}
 	for (index = 0; index < OLD_SIZE; index++)
 	{
 		if (array[index] == chr)
 		{
-			if (current_file->first_time)
-			current_file->total_newlines = current_file->total_newlines + 1;
 			if (first_found)
 			{
 				ret_index = index;
@@ -81,7 +74,6 @@ int getindex(char *array, char chr)
 			}
 		}
 	}
-	current_file->first_time = 0;
 	return (ret_index);
 }
 
@@ -154,9 +146,6 @@ streamf *handlefd(unsigned int fd)
 		file->output = NULL;
 		file->old_size = 0;
 		file->readed = 0;
-		file->first_time = 1;
-		file->total_newlines = 0;
-		file->index_count = 0;
 		current_file = file;
 	}
 	return (file);
@@ -179,16 +168,12 @@ char *split_line(int index)
 		return (NULL);
 	memcpy(line, current_file->output, index);
 	line[index] = 0;
-	current_file->index_count = 1 + current_file->index_count;
 	if (!OLD_SIZE)
 	{
 		free(current_file->output);
 		current_file->output = NULL;
 		current_file->old_size = 0;
 		current_file->readed = 0;
-		current_file->index_count = 0;
-		current_file->total_newlines = 0;
-		current_file->first_time = 1;
 	}
 	else
 	{
