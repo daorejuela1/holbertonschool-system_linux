@@ -31,11 +31,11 @@ char *_getline(const int fd)
 			if (temp == NULL)
 				return (NULL);
 			current_file->output = temp;
-			memcpy(current_file->output + OLD_SIZE, buffer, file->readed);
+			memcpy(current_file->output + OLD_SIZE, buffer, current_file->readed);
 			OLD_SIZE = NEW_SIZE;
 		}
 		index = getindex(current_file->output, 10);
-	} while (readed == READ_SIZE && index == -1);
+	} while (current_file->readed == READ_SIZE && index == -1);
 	if (index != -1 && current_file->output)
 		return (split_line(index));
 	if (OLD_SIZE)
