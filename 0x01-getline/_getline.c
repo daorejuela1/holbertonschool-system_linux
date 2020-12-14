@@ -180,7 +180,7 @@ char *split_line(int index)
 	memcpy(line, current_file->output, index);
 	line[index] = 0;
 	current_file->index_count = 1 + current_file->index_count;
-	if (current_file->index_count == current_file->total_newlines)
+	if (!OLD_SIZE)
 	{
 		free(current_file->output);
 		current_file->output = NULL;
