@@ -11,14 +11,12 @@
  *
  * @fd: file descriptor
  * @output: store of actual read data
- * @readed: stores the quantity of bytes readed
  * @old_size: stores the old size of the buffer reads
  * @next: pointer to the next stream
  */
 typedef struct STREAM
 {
 	unsigned int fd;
-	unsigned int readed;
 	unsigned int old_size;
 	char *output;
 	struct STREAM *next;

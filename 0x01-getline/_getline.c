@@ -1,6 +1,6 @@
 #include "_getline.h"
 #define OLD_SIZE (current_file->old_size)
-#define NEW_SIZE (current_file->readed + OLD_SIZE)
+#define NEW_SIZE (readed + OLD_SIZE)
 static streamf *file, *current_file;
 /**
  * _getline - Gets a line from an input
@@ -22,7 +22,6 @@ char *_getline(const int fd)
 		return (NULL);
 	do {
 		readed = read(current_file->fd, &buffer, READ_SIZE);
-		current_file->readed = readed;
 		if (readed == -1)
 			return (NULL);
 		if (readed)
@@ -31,11 +30,11 @@ char *_getline(const int fd)
 			if (temp == NULL)
 				return (NULL);
 			current_file->output = temp;
-			memcpy(current_file->output + OLD_SIZE, buffer, current_file->readed);
+			memcpy(current_file->output + OLD_SIZE, buffer, readed);
 			OLD_SIZE = NEW_SIZE;
 		}
 		index = getindex(current_file->output, 10);
-	} while (current_file->readed == READ_SIZE && index == -1);
+	} while (readed == READ_SIZE && index == -1);
 	if (index != -1 && current_file->output)
 		return (split_line(index));
 	if (OLD_SIZE)
