@@ -22,11 +22,11 @@ char *_getline(const int fd)
 		return (NULL);
 	do {
 		readed = read(current_file->fd, &buffer, READ_SIZE);
+		current_file->readed = readed;
 		if (readed == -1)
 			return (NULL);
 		if (readed)
 		{
-			current_file->readed = readed;
 			temp = _realloc(current_file->output, OLD_SIZE, NEW_SIZE);
 			if (temp == NULL)
 				return (NULL);
@@ -177,7 +177,7 @@ char *split_line(int index)
 	memcpy(line, current_file->output, index);
 	line[index] = 0;
 	current_file->index_count = 1 + current_file->index_count;
-	if (current_file->index_count == current_file->total_newlines - 1)
+	if (current_file->index_count == current_file->total_newlines)
 	{
 		free(current_file->output);
 		current_file->output = NULL;
