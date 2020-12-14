@@ -144,7 +144,6 @@ streamf *handlefd(unsigned int fd)
 		file->fd = fd;
 		file->output = NULL;
 		file->old_size = 0;
-		file->readed = 0;
 		current_file = file;
 	}
 	return (file);
@@ -172,7 +171,6 @@ char *split_line(int index)
 		free(current_file->output);
 		current_file->output = NULL;
 		current_file->old_size = 0;
-		current_file->readed = 0;
 	}
 	else
 	{
