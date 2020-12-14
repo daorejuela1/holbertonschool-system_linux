@@ -1,6 +1,7 @@
 #include "_getline.h"
 #define OLD_SIZE (current_file->old_size)
 #define NEW_SIZE (readed + OLD_SIZE)
+#define CLEAN_CUR_O (free(current_file->output), current_file->output = NULL)
 static streamf *file, *current_file;
 /**
  * _getline - Gets a line from an input
@@ -11,7 +12,7 @@ static streamf *file, *current_file;
 char *_getline(const int fd)
 {
 	int readed = 0, index = 0;
-	char buffer[READ_SIZE + 1], *line = NULL, *temp = NULL;
+	char buffer[READ_SIZE], *line = NULL, *temp = NULL;
 
 	if (fd == -1)
 	{
@@ -43,11 +44,11 @@ char *_getline(const int fd)
 		if (line == NULL)
 			return (NULL);
 		memcpy(line, current_file->output, OLD_SIZE), line[OLD_SIZE] = 0;
-		OLD_SIZE = 0, free(current_file->output);
-		current_file->output = NULL;
+		OLD_SIZE = 0, free(current_file->output), current_file->output = NULL;
 		return (line);
 	}
-	clean_files();
+	if (!file->next)
+		CLEAN_CUR_O, free(file), file = NULL;
 	return (NULL);
 }
 /**
