@@ -106,12 +106,12 @@ def write_inheap(pid, search_bytes, replace_bytes, heap_start, heap_end):
             if data_pos == -1:
                 print("The string {} is not in the heap".format(search_bytes))
                 exit(1)
-            if (heap_start + data_pos + len(replace_bytes)) > heap_end:
+            if (heap_start + data_pos + len(replace_bytes)) + 1 > heap_end:
                 print("The replace {} overlaps the heap".format(replace_bytes))
                 exit(1)
             print("Found in byte: 0x{:02x}".format(heap_start + data_pos))
             mem_file.seek(heap_start + data_pos)
-            mem_file.write(replace_bytes)
+            mem_file.write(replace_bytes + b'\x00')
     except Exception as err:
         print("Error in mem: {}".format(err))
         exit(1)
