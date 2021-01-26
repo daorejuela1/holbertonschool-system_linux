@@ -2,7 +2,7 @@
 
 NAME1 = 0-hreadelf 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -pedantic -g
+CFLAGS = -Wall -Werror -Wextra -pedantic
 
 SRCDIR = src
 OBJDIR = obj
