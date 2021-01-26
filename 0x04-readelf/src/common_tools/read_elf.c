@@ -2,21 +2,37 @@
 
 #define NO_ELF "readelf: Error: Not an ELF file"
 #define WRONG_MAGIC "- it has the wrong magic bytes at the start\n"
-
-Elf64_Ehdr read_elf_header(const char *file_name, Elf32_Ehdr *header_32)
+#define DIRECTORY "readelf: Error: '%s' is not an ordinary file\n"
+#define NOPERM "readelf: Error: Input file '%s' is not readable\n"
+#define NOFILE "readelf: Error: '%s': No such file\n"
+Elf64_Ehdr read_elf_header(FILE **file, char *file_name, Elf32_Ehdr *header_32)
 {
+	struct stat sb;
 	Elf64_Ehdr header;
-	FILE *file = NULL;
 
-	file = fopen(file_name, "rb");
-	if (file)
+	if ((stat(file_name, &sb) == 0) && ((sb.st_mode & S_IFMT) == S_IFDIR))
 	{
-		fread(&header, sizeof(header), 1, file);
+		fprintf(stderr, DIRECTORY, file_name);
+		exit(1);
+	}
+	else if (stat(file_name, &sb) == 0 && access(file_name, R_OK) != 0)
+	{
+		fprintf(stderr, NOPERM, file_name);
+		exit(1);
+	}
+	else if (stat(file_name, &sb) != 0)
+	{
+		fprintf(stderr, NOFILE, file_name);
+		exit(1);
+	}
+	*file = fopen(file_name, "rb");
+	if (*file)
+	{
+		fread(&header, sizeof(header), 1, *file);
+		rewind(*file);
+		fread(header_32, sizeof(*header_32), 1, *file);
 		if (memcmp(header.e_ident, ELFMAG, SELFMAG) == 0)
 		{
-			rewind(file);
-			if (header.e_ident[4] == 1)
-				fread(header_32, sizeof(*header_32), 1, file);
 			return (header);
 		}
 		fprintf(stderr, "%s %s", NO_ELF, WRONG_MAGIC);
@@ -24,7 +40,6 @@ Elf64_Ehdr read_elf_header(const char *file_name, Elf32_Ehdr *header_32)
 	}
 	else
 	{
-		perror("Error: ");
 		exit(1);
 	}
 }
