@@ -13,7 +13,7 @@ void print_magic(unsigned char e_ident[EI_NIDENT])
 	printf("  Magic:   ");
 	for (i = 0; i < EI_NIDENT; i++)
 	{
-		printf("%02x ", e_ident[i]);
+		printf("%2.2x ", e_ident[i]);
 	}
 	printf("\n");
 }
@@ -25,16 +25,28 @@ void print_magic(unsigned char e_ident[EI_NIDENT])
  */
 void print_class(unsigned char class_flag)
 {
-	int i;
-	dict_classes classes[] = {{2, "ELF64"}, {1, "ELF32"},};
+	char *value = NULL;
 
 	printf("  Class:");
 	print_spaces(29);
-	for (i = 0; i < 2; i++)
+	switch (class_flag)
 	{
-		if (classes[i].key == class_flag)
-			printf("%s\n", classes[i].value);
+		case ELFCLASSNONE:
+			value = "none";
+			break;
+		case ELFCLASS32:
+			value = "ELF32";
+			break;
+		case ELFCLASS64:
+			value = "ELF64";
+			break;
+		default:
+			value = NULL;
 	}
+	if (value)
+		printf("%s\n", value);
+	else
+		printf("<unknown: %x>\n", class_flag);
 }
 
 /**
@@ -45,18 +57,27 @@ void print_class(unsigned char class_flag)
  */
 void print_data(unsigned char data_flag)
 {
-	int i;
-	dict_classes data[] = {{1, "2's complement, little endian"},
-				{2, "2's complement, big endian"},};
+	char *value = NULL;
 	char *info = "  Data:";
 
 	printf("%s", info);
 	print_spaces(37 - strlen(info));
-	for (i = 0; i < 2; i++)
+	switch (data_flag)
 	{
-		if (data[i].key == data_flag)
-			printf("%s\n", data[i].value);
+	case ELFDATANONE:
+		value = "none";
+		break;
+	case ELFDATA2LSB:
+		value = "2's complement, little endian";
+		break;
+	case ELFDATA2MSB:
+		value = "2's complement, big endian";
+		break;
 	}
+	if (value)
+		printf("%s\n", value);
+	else
+		printf("<unknown: %x>\n", data_flag);
 }
 
 /**
@@ -67,18 +88,14 @@ void print_data(unsigned char data_flag)
  */
 void print_version(unsigned char version_flag)
 {
-	int i;
 	char *info = "  Version:";
-	dict_classes version[] = {{0, "0 (invalid)"}, {1, "1 (current)"},
-		{2, "1"},};
 
 	printf("%s", info);
 	print_spaces(37 - strlen(info));
-	for (i = 0; i < 2; i++)
-	{
-		if (version[i].key == version_flag)
-			printf("%s\n", version[i].value);
-	}
+	if (version_flag == EV_CURRENT)
+		printf("%d%s\n", version_flag, " (current)");
+	else
+		printf("%d%s\n", version_flag, " (invalid)");
 }
 
 /**
@@ -89,22 +106,12 @@ void print_version(unsigned char version_flag)
  */
 void print_os(unsigned char os_flag)
 {
-	int i;
 	char *info = "  OS/ABI:";
-	dict_classes os[] = {{0, "UNIX - System V"},
-	{1, "UNIX - HP-UX"}, {2, "UNIX - NetBSD"}, {3, "UNIX - Linux"},
-	{4, "UNIX - GNU Hurd"}, {6, "UNIX - Solaris"}, {7, "UNIX - AIX"},
-	{8, "UNIX - IRIX"}, {9, "UNIX - FreeBSD"}, {0xA, "UNIX - Tru64"},
-	{0xB, "Novell Modesto"}, {0xC, "OpenBSD"},
-	{0xD, "OpenVMS"}, {0xE, "NonStop Kernel"},
-	{0xF, "AROS"}, {0x10, "Fenix OS"},
-	{0x11, "CloudABI"}, {0x12, "Stratus Technologies OpenVOS"},};
 
 	printf("%s", info);
 	print_spaces(37 - strlen(info));
-	for (i = 0; i < 19; i++)
-	{
-		if (os[i].key == os_flag)
-			printf("%s\n", os[i].value);
-	}
+	if (get_osabi_name(os_flag))
+		printf("%s\n", get_osabi_name(os_flag));
+	else
+		printf("<unknown: %x>\n", os_flag);
 }

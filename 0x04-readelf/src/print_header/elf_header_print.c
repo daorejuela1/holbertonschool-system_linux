@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	print_version(header.e_ident[6]);
 	print_os(header.e_ident[7]);
 	print_abi(header.e_ident[8]);
-	print_type(header.e_type);
+	print_type(header.e_type, header_32.e_type, header.e_ident[4]);
 	print_machine(header.e_machine);
 	print_version2(header.e_version);
 	print_entryp(header.e_entry, header_32.e_entry, header.e_ident[4]);

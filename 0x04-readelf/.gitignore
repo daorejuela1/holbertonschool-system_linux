@@ -1,6 +1,6 @@
 *
 !.gitignore
-!src/**/*.c
-!src/**/*.h
+!*/src/*/*.c
+!*/src/*/*.h
 !README.md
 !Makefile

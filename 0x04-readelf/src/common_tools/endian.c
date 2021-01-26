@@ -23,6 +23,7 @@ void endian_check(Elf64_Ehdr *header, Elf32_Ehdr *header_32)
 			header->e_shentsize = __bswap_constant_16(header->e_shentsize);
 			header->e_shnum = __bswap_constant_16(header->e_shnum);
 			header->e_shstrndx = __bswap_constant_16(header->e_shstrndx);
+			header->e_type = __bswap_constant_16(header->e_type);
 		}
 		else
 		{
@@ -36,6 +37,7 @@ void endian_check(Elf64_Ehdr *header, Elf32_Ehdr *header_32)
 			header_32->e_shentsize = __bswap_constant_16(header_32->e_shentsize);
 			header_32->e_shnum = __bswap_constant_16(header_32->e_shnum);
 			header_32->e_shstrndx = __bswap_constant_16(header_32->e_shstrndx);
+			header_32->e_type = __bswap_constant_16(header_32->e_type);
 		}
 	}
 }

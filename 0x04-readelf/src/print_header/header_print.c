@@ -22,25 +22,21 @@ void print_abi(unsigned char abi_value)
 /**
  * print_type - prints the type of an ELF file
  * @type_flag: the kind of type the file was created fot
+ * @type_flag_32: the kind of type the file was created fot
+ * @selector: the kind of type the file was created fot
  *
  * Return: Nothing
  */
-void print_type(unsigned char type_flag)
+void print_type(Elf64_Half type_flag, Elf32_Half type_flag_32, int selector)
 {
-	int i;
 	char *info = "  Type:";
-	dict_classes type[] = {{0, "EXEC (Executable file)"},
-	{1, "REL (Relocatable file)"},
-	{2, "EXEC (Executable file)"}, {3, "DYN (Shared object file)"},
-	{4, "CORE (Core file)"},};
 
 	printf("%s", info);
 	print_spaces(37 - strlen(info));
-	for (i = 0; i < 5; i++)
-	{
-		if (type[i].key == type_flag)
-			printf("%s\n", type[i].value);
-	}
+	if (selector == 2)
+		printf("%s\n", get_file_type(type_flag));
+	else
+		printf("%s\n", get_file_type(type_flag_32));
 }
 
 /**
