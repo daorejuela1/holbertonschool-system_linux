@@ -64,6 +64,7 @@ void print_machine(Elf64_Half machine_flag)
 /**
  * get_machine - gets the machine from the number
  * @machine_flag: number that represents the machine
+ *
  * Return: the string or NULL
  */
 static char *get_machine(Elf64_Half machine_flag)
@@ -113,6 +114,7 @@ static char *get_machine(Elf64_Half machine_flag)
 /**
  * get_machine_2 - gets the target machine type string
  * @machine_flag: number that represents the machine
+ *
  * Return: the string or NULL
  */
 static char *get_machine_2(Elf64_Half machine_flag)
