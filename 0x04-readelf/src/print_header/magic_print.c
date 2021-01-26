@@ -15,7 +15,7 @@ void print_magic(unsigned char e_ident[EI_NIDENT])
 	{
 		printf("%02x ", e_ident[i]);
 	}
-	printf(" \n");
+	printf("\n");
 }
 /**
  * print_class - prints the class of an ELF file
