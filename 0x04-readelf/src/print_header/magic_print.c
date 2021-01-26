@@ -94,12 +94,12 @@ void print_os(unsigned char os_flag)
 	int i;
 	char *info = "  OS/ABI:";
 	dict_classes os[] = {{0, "UNIX - System V"},
-	{1, "HP-UX"}, {2, "UNIX - NetBSD"}, {3, "Linux"},
-	{4, "GNU Hurd"}, {6, "Solaris"}, {7, "AIX"},
-	{8, "IRIX"}, {9, "FreeBSD"}, {0xA, "Tru64"},
+	{1, "UNIX - HP-UX"}, {2, "UNIX - NetBSD"}, {3, "UNIX - Linux"},
+	{4, "UNIX - GNU Hurd"}, {6, "UNIX - Solaris"}, {7, "UNIX - AIX"},
+	{8, "UNIX - IRIX"}, {9, "UNIX - FreeBSD"}, {0xA, "UNIX - Tru64"},
 	{0xB, "Novell Modesto"}, {0xC, "OpenBSD"},
 	{0xD, "OpenVMS"}, {0xE, "NonStop Kernel"},
-	{0xF, "AROS"}, {0x10, "Fenix OS"}, {0x3E, "AMD x86-64 architecture"},
+	{0xF, "AROS"}, {0x10, "Fenix OS"},
 	{0x11, "CloudABI"}, {0x12, "Stratus Technologies OpenVOS"},};
 
 	printf("%s", info);
