@@ -1,1 +1,6 @@
-:/*.o
+*
+!.gitignore
+!src/**/*.c
+!src/**/*.h
+!README.md
+!Makefile
