@@ -2,7 +2,6 @@
 #define _COMMON_TOOLS_H
 
 #include <elf.h>
-#include <endian.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
