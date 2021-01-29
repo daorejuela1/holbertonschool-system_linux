@@ -1,28 +1,32 @@
 # -*- MakeFile -*-
 
-NAME1 = 0-hreadelf 
+NAME0 = 0-hreadelf 
+NAME1 = 1-hreadelf 
+NAME2 = 2-hreadelf 
+NAME100 = 100-hreadelf 
+
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -pedantic -g
+CFLAGS = -Wall -Werror -Wextra -pedantic
 
 SRCDIR = src
 OBJDIR = obj
 
 TASK0 = print_header
 COMMON = common_tools
+COMMON_DIR = hreadelf
 
-OBJ += $(patsubst %.c, %.o, $(wildcard $(SRCDIR)/$(TASK0)/*.c))
-OBJ += $(patsubst %.c, %.o, $(wildcard $(SRCDIR)/$(COMMON)/*.c))
+OBJ0 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/0-main.c)
+OBJ1 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/1-main.c)
+OBJ2 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/2-main.c)
+OBJ100 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/100-main.c)
 
 .PHONY : all clean oclean fclean re
 
-$(NAME1): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME1)
-
 clean:
-	$(RM) *~ $(NAME1)
+	$(RM) *~ $(NAME0)
 
 oclean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ0)
 
 fclean: clean oclean
 
@@ -30,3 +34,15 @@ re: oclean $(NAME)
 
 print-%:
 	@echo '$*=$($*)'
+
+$(NAME0): $(OBJ0)
+	$(CC) $(OBJ0) -o $(NAME0)
+
+$(NAME1): $(OBJ1)
+	$(CC) $(OBJ1) -o $(NAME1)
+
+$(NAME2): $(OBJ2)
+	$(CC) $(OBJ2) -o $(NAME2)
+
+$(NAME100): $(OBJ100)
+	$(CC) $(OBJ100) -o $(NAME100)
