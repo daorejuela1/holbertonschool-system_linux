@@ -8,32 +8,12 @@ NAME100 = 100-hreadelf
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
 
-SRCDIR = src
-OBJDIR = obj
-
-TASK0 = print_header
-COMMON = common_tools
 COMMON_DIR = hreadelf
 
 OBJ0 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/0-main.c)
 OBJ1 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/1-main.c)
 OBJ2 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/2-main.c)
 OBJ100 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/100-main.c)
-
-.PHONY : all clean oclean fclean re
-
-clean:
-	$(RM) *~ $(NAME0)
-
-oclean:
-	$(RM) $(OBJ0)
-
-fclean: clean oclean
-
-re: oclean $(NAME)
-
-print-%:
-	@echo '$*=$($*)'
 
 $(NAME0): $(OBJ0)
 	$(CC) $(OBJ0) -o $(NAME0)
