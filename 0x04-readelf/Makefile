@@ -7,7 +7,7 @@ NAME100 = 100-hreadelf
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
-
+SRCDIR = src
 COMMON_DIR = hreadelf
 
 OBJ0 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/0-main.c)
