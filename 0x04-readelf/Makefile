@@ -10,7 +10,10 @@ CFLAGS = -Wall -Werror -Wextra -pedantic
 SRCDIR = src
 COMMON_DIR = hreadelf
 
-OBJ0 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/0-main.c)
+TASK0 = print_header
+COMMON = common_tools
+OBJ0 += $(patsubst %.c, %.o, $(wildcard $(SRCDIR)/$(TASK0)/*.c))
+OBJ0 += $(patsubst %.c, %.o, $(wildcard $(SRCDIR)/$(COMMON)/*.c))
 OBJ1 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/1-main.c)
 OBJ2 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/2-main.c)
 OBJ100 += $(patsubst %.c, %.o, $(SRCDIR)/$(COMMON_DIR)/100-main.c)
