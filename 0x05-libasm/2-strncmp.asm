@@ -56,8 +56,8 @@ asm_strncmp:
 
 greater:
 	mov rax, 1
-	call function_epilogue
+	jmp function_epilogue
 
 less:
 	mov rax, -1
-	call function_epilogue
+	jmp function_epilogue
