@@ -45,9 +45,9 @@ asm_strcmp:
 	ret		; return to address in the stack IP
 
 greater:
-	mov rax, 1
+	mov eax, 1
 	jmp function_epilogue
 
 less:
-	mov rax, -1
+	mov eax, -1
 	jmp function_epilogue
