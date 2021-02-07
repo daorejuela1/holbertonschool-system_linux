@@ -43,7 +43,7 @@ asm_strncmp:
 	return_value:
 	mov al, bl ; return value
 	cmp al, 0
-	je function_epilogue; dont divide zero by zero
+	je zero; dont divide zero by zero
 	jg greater
 	jl less
 
@@ -52,12 +52,16 @@ asm_strncmp:
 	pop r15
 	mov rsp, rbp; Restore previous stack frame
 	pop rbp; Those two lines are equivalent to 'leave'
-	ret		; return to address in the stack IP
+	ret	; return to address in the stack IP
+
+zero:
+	mov eax, 0
+	jmp function_epilogue
 
 greater:
-	mov rax, 1
+	mov eax, 1
 	jmp function_epilogue
 
 less:
-	mov rax, -1
+	mov eax, -1
 	jmp function_epilogue
