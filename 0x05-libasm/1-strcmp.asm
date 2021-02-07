@@ -15,6 +15,8 @@ asm_strcmp:
 	mov rbp, rsp ; update base pointer to handle the current stack position
 
 	push r15
+	push rbx
+	push rcx
 	mov bl, [edi]
 	mov cl, [esi]
 	sub bl, cl
@@ -34,15 +36,21 @@ asm_strcmp:
 	return_value:
 	mov al, bl ; return value
 	cmp al, 0
-	je function_epilogue; dont divide zero by zero
+	je zero; be sure every vit is zero
 	jg greater
 	jl less
 
 	function_epilogue:
+	pop rcx
+	pop rbx
 	pop r15
 	mov rsp, rbp; Restore previous stack frame
 	pop rbp; Those two lines are equivalent to 'leave'
 	ret		; return to address in the stack IP
+
+zero:
+	mov eax, 0
+	jmp function_epilogue
 
 greater:
 	mov eax, 1
