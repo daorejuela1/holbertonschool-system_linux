@@ -7,7 +7,7 @@ global asm_strstr	; EXPORT our 'asm_strstr' function
 	; returns the c address if found
 	;
 	; edi <- const char haystack
-	; esi <- const char  needle 
+	; esi <- const char  needle
 	;
 	; Return: returns a pointer to the ocurrence of char needle
 asm_strstr:
@@ -15,11 +15,11 @@ asm_strstr:
 	mov rbp, rsp ; update base pointer to handle the current stack position
 
 	push r9
-	mov rax, 0
+	mov rax, rdi
 	mov rbx, 0
 	mov cl, [edi]
 	cmp cl, 0
-	je function_epilogue
+	je set_special_output
 	mov r9b, [esi]
 	cmp r9b, 0
 	je function_epilogue
@@ -41,6 +41,16 @@ asm_strstr:
 	mov rsp, rbp; Restore previous stack frame
 	pop rbp; Those two lines are equivalent to 'leave'
 	ret	; return to address in the stack IP
+
+set_special_output:
+	mov r9b, [esi]
+	cmp r9b, 0
+	je function_epilogue
+	jne set_null_value
+
+set_null_value:
+	mov eax, 0
+	jmp function_epilogue
 
 increase_needle:
 	cmp ebx, 0
