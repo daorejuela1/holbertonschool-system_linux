@@ -42,7 +42,7 @@ asm_strcspn:
 while_not_null_s2:
 	mov cl, [esi]
 	cmp cl, 0
-	je match_found 
+	je match_found
 	cmp bl, cl
 	je return_value
 	inc esi
