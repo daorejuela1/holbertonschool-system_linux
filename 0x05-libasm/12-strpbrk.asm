@@ -29,7 +29,7 @@ asm_strpbrk:
 			jmp while_not_null_s1
 
 	return_value:
-	mov rax, 0; return value
+	xor rax, rax; return value
 
 	function_epilogue:
 	pop rcx
@@ -42,7 +42,7 @@ asm_strpbrk:
 while_not_null_s2:
 	mov cl, [esi]
 	cmp cl, 0
-	je return_value
+	je next_iteration
 	cmp bl, cl
 	je match_found
 	inc esi
