@@ -17,20 +17,24 @@ asm_strstr:
 	push r9
 	mov rax, rdi
 	mov rbx, 0
-	mov r15d, esi
+	mov cl, [edi]
+	cmp cl, 0
+	je set_special_output
+	mov r9b, [esi]
+	cmp r9b, 0
+	je function_epilogue
 	while_notnull:
 		mov cl, [edi]
-		cmp cl, 0
-		je function_epilogue
-		mov r9b, [esi]
-		cmp r9b, 0
-		je function_epilogue
+		mov r9b, [esi + ebx]
 		cmp cl, r9b
 		je increase_needle
 		jne reset
 		continue_after_reset:
 			inc edi
-			jmp while_notnull
+			mov cl, [edi]
+			cmp cl, 0
+			je function_epilogue
+			jne while_notnull
 
 	function_epilogue:
 	pop r9
@@ -38,21 +42,31 @@ asm_strstr:
 	pop rbp; Those two lines are equivalent to 'leave'
 	ret	; return to address in the stack IP
 
+set_special_output:
+	mov r9b, [esi]
+	cmp r9b, 0
+	je function_epilogue
+	jne set_null_value
+
+set_null_value:
+	mov eax, 0
+	jmp function_epilogue
 
 increase_needle:
 	cmp ebx, 0
 	je set_output
 	continue_after_output:
-		inc esi
+		inc ebx
+		mov r9b, [esi + ebx]
+		cmp r9b, 0
+		je function_epilogue
 		jmp continue_after_reset
 
 reset:
 	mov rbx, 0
 	mov rax, 0
-	mov esi, r15d
 	jmp continue_after_reset
 
 set_output:
-	mov rax, rdi
-	inc ebx
+	mov eax, edi
 	jmp continue_after_output
