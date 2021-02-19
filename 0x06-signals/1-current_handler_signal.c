@@ -7,7 +7,9 @@
  */
 void (*current_handler_signal(void))(int)
 {
-	sighandler_t sigint_handler = signal(SIGINT, SIG_IGN);
+	__sighandler_t sigint_handler = signal(SIGINT, SIG_IGN);
 
+	if (sigint_handler == SIG_ERR)
+		return (NULL);
 	return (sigint_handler);
 }
