@@ -10,6 +10,7 @@ int handle_sigaction(void)
 	struct sigaction act;
 
 	memset(&act, 0, sizeof(act));
-	sigaction(SIGINT, &act, NULL);
+	if (!sigaction(SIGINT, &act, NULL))
+		return (NULL);
 	return (act.sa_handler);
 }

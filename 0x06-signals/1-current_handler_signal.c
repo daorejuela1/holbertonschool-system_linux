@@ -11,5 +11,7 @@ void (*current_handler_signal(void))(int)
 
 	if (sigint_handler == SIG_ERR)
 		return (NULL);
+	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+		return (NULL);
 	return (sigint_handler);
 }
