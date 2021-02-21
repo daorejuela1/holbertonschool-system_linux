@@ -5,7 +5,7 @@
  *
  * Return: retrieves the current handler of the signal SIGINT
  */
-int handle_sigaction(void)
+void (*current_handler_sigaction(void))(int)
 {
 	struct sigaction act;
 
