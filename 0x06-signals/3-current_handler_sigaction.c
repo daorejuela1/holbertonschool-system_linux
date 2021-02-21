@@ -11,6 +11,6 @@ void (*current_handler_sigaction(void))(int)
 
 	memset(&old, 0, sizeof(old));
 	if (!sigaction(SIGINT, NULL, &old))
-		return (NULL);
-	return (old.sa_handler);
+		return (old.sa_handler);
+	return (NULL);
 }
