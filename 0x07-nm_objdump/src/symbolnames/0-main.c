@@ -15,12 +15,13 @@
 int main(int argc, char *argv[], char *env[])
 {
 	char *command = "/usr/bin/nm";
-	char *arguments[3];
+	char *arguments[4];
 
 	(void) argc;
-	arguments[0] = command;
+	arguments[0] = "./hnm";
 	arguments[1] = "-p";
 	arguments[2] = argv[1];
+	arguments[3] = NULL;
 	if (execve(command, arguments, env) == -1)
 	{
 		perror("Error: ");
