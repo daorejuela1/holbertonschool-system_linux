@@ -17,8 +17,7 @@ int main(int argc, char *argv[], char *env[])
 	char *command = "/usr/bin/nm";
 	char *arguments[3];
 
-	if (argc != 2)
-		exit(0);
+	(void) argc;
 	arguments[0] = command;
 	arguments[1] = "-p";
 	arguments[2] = argv[1];
