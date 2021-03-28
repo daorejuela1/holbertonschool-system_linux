@@ -22,7 +22,6 @@ void print_python_list(PyObject *p)
 		printf("[*] Python list info\n");
 		fflush(stdout);
 		tamano = (int)(((PyVarObject *)(p))->ob_size);
-
 		printf("[*] Size of the Python List = %d\n", tamano);
 		fflush(stdout);
 		printf("[*] Allocated = %d\n", (int)(((PyListObject *)(p))->allocated));
@@ -133,10 +132,10 @@ void print_python_float(PyObject *p)
 	char *string;
 	double float_value;
 
-	printf("[.] float object info\n");
-	fflush(stdout);
 	if (PyFloat_Check(p))
 	{
+		printf("[.] float object info\n");
+		fflush(stdout);
 		float_value = ((PyFloatObject *)(p))->ob_fval;
 		string = PyOS_double_to_string(float_value, 'r', 0, Py_DTSF_ADD_DOT_0, NULL);
 		printf("  value: %s\n", string);
