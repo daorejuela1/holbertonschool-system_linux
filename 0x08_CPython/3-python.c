@@ -16,25 +16,24 @@ void print_python_float(PyObject *p);
 void print_python_list(PyObject *p)
 {
 	int i = 0, tamano = 0;
-	const char *name;
 
 	if (PyList_Check(p))
 	{
 		printf("[*] Python list info\n");
 		fflush(stdout);
 		tamano = (int)(((PyVarObject *)(p))->ob_size);
+
 		printf("[*] Size of the Python List = %d\n", tamano);
 		fflush(stdout);
 		printf("[*] Allocated = %d\n", (int)(((PyListObject *)(p))->allocated));
 		fflush(stdout);
 		for (i = 0; i < tamano; i++)
 		{
-			name = ((PyListObject *)(p))->ob_item[i]->ob_type->tp_name;
 			printf("Element %d: %s\n", i, DATATYPE);
 			fflush(stdout);
-			if (strcmp(name, "bytes") == 0)
+			if (PyBytes_Check((((PyListObject *)(p))->ob_item[i])))
 				print_python_bytes((((PyListObject *)(p))->ob_item[i]));
-			else if (strcmp(name, "float") == 0)
+			else if (PyFloat_Check((((PyListObject *)(p))->ob_item[i])))
 				print_python_float((((PyListObject *)(p))->ob_item[i]));
 		}
 	}
@@ -86,8 +85,8 @@ void print_python_bytes(PyObject *p)
 				fflush(stdout);
 			}
 		}
-		printf("\n");
-		fflush(stdout);
+			printf("\n");
+			fflush(stdout);
 	}
 	else
 	{
@@ -140,8 +139,12 @@ void print_python_float(PyObject *p)
 	{
 		float_value = ((PyFloatObject *)(p))->ob_fval;
 		string = PyOS_double_to_string(float_value, 'r', 0, Py_DTSF_ADD_DOT_0, NULL);
-		printf("  value: %s\n", string);
+		if (strchr(string, '.'))
+			printf("  value: %s\n", string);
+		else
+			printf("  value: %s.0\n", string);
 		fflush(stdout);
+		PyMem_Free(string);
 	}
 	else
 	{
