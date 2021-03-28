@@ -138,7 +138,7 @@ void print_python_float(PyObject *p)
 	if (PyFloat_Check(p))
 	{
 		float_value = ((PyFloatObject *)(p))->ob_fval;
-		string = PyOS_double_to_string(float_value, 'r', 0, Py_DTSF_ADD_DOT_0, NULL);
+		string = PyOS_double_to_string(float, 'g', 16, 0, NULL);
 		if (strchr(string, '.'))
 			printf("  value: %s\n", string);
 		else
