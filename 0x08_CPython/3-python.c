@@ -139,7 +139,7 @@ void print_python_float(PyObject *p)
 	{
 		float_value = ((PyFloatObject *)(p))->ob_fval;
 		string = PyOS_double_to_string(float_value, 'g', 16, 0, NULL);
-		printf("  value: %s%s\n", str, strchr(str, '.') ? "" : ".0");
+		printf("  value: %s%s\n", string, strchr(string, '.') ? "" : ".0");
 		fflush(stdout);
 		PyMem_Free(string);
 	}
