@@ -138,11 +138,8 @@ void print_python_float(PyObject *p)
 	if (PyFloat_Check(p))
 	{
 		float_value = ((PyFloatObject *)(p))->ob_fval;
-		string = PyOS_double_to_string(float_value, 'g', 16, 0, NULL);
-		if (strchr(string, '.'))
-			printf("  value: %s\n", string);
-		else
-			printf("  value: %s.0\n", string);
+		string = PyOS_double_to_string(float_value, 'g', 16, Py_DTSF_ADD_DOT_0, NULL);
+		printf("  value: %s\n", string);
 		fflush(stdout);
 		PyMem_Free(string);
 	}
