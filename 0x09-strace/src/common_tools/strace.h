@@ -12,5 +12,6 @@ int await_syscall(pid_t child_pid);
 void trace_name(pid_t child_pid);
 int syscall_withreturn(pid_t child_pid);
 void trace_namehex(pid_t child_pid);
+void trace_namewithargs(pid_t child_pid);
 
 #endif
