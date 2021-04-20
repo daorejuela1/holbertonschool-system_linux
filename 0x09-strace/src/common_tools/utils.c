@@ -62,7 +62,6 @@ void trace_name(pid_t child_pid)
 			break;
 		printf("\n");
 	}
-	printf("\n");
 }
 
 

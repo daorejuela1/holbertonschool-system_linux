@@ -30,6 +30,7 @@ int main(int ac, char **av, char **envp)
 	else
 	{
 		trace_name(child_pid);
+		printf("\n");
 	}
 	return (EXIT_SUCCESS);
 }
