@@ -9,7 +9,6 @@
 void trace_child(char **av, char **envp)
 {
 	ptrace(PTRACE_TRACEME, 0, 0, 0);
-	kill(getpid(), SIGSTOP);
 	if (execve(av[1], av + 1, envp) == -1)
 	{
 		dprintf(STDERR_FILENO, "Exec failed: %d\n", errno);
