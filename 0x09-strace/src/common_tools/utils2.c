@@ -18,11 +18,11 @@ void trace_namehex(pid_t child_pid)
 			break;
 		memset(&uregs, 0, sizeof(uregs));
 		ptrace(PTRACE_GETREGS, child_pid, 0, &uregs);
-		printf("%s = ", syscalls_64_g[uregs.orig_rax].name);
+		printf("%s", syscalls_64_g[uregs.orig_rax].name);
 		if (syscall_withreturn(child_pid))
 			break;
 		memset(&uregs, 0, sizeof(uregs));
 		ptrace(PTRACE_GETREGS, child_pid, 0, &uregs);
-		printf("%#lx\n", (long)uregs.rax);
+		printf(" = %#lx\n", (long)uregs.rax);
 	}
 }

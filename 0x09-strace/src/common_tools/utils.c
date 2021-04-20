@@ -102,7 +102,7 @@ int syscall_withreturn(pid_t child_pid)
 			return (0);
 		if (WIFEXITED(status))
 		{
-			printf("?\n");
+			printf(" = ?\n");
 			return (1);
 		}
 	}
