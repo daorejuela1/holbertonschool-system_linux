@@ -84,3 +84,27 @@ int await_syscall(pid_t child_pid)
 			return (1);
 	}
 }
+
+/**
+ * syscall_withreturn - waits for a syscall printing ? in case of exit 
+ * @child_pid: pid of process to await
+ * Return: 0 if child stopped, 1 if exited
+ */
+int syscall_withreturn(pid_t child_pid)
+{
+	int status;
+
+	while (1)
+	{
+		ptrace(PTRACE_SYSCALL, child_pid, 0, 0);
+		waitpid(child_pid, &status, 0);
+		if (WIFSTOPPED(status) && WSTOPSIG(status) & 0x80)
+			return (0);
+		if (WIFEXITED(status))
+		{
+			printf("?\n");
+			return (1);
+		}
+	}
+}
+
