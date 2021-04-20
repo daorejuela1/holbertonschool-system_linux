@@ -28,6 +28,8 @@ int main(int ac, char **av, char **envp)
 	else if (!child_pid)
 		trace_child(av, envp);
 	else
+	{
 		trace_name(child_pid);
+	}
 	return (EXIT_SUCCESS);
 }

@@ -46,18 +46,21 @@ void trace_parent(pid_t child_pid)
  */
 void trace_name(pid_t child_pid)
 {
-	int status, i;
-	struct user_regs_struct regs;
+	int status;
+	struct user_regs_struct uregs;
 
-	for (status = 1, i = 1; !WIFEXITED(status); i ^= 1)
+	waitpid(child_pid, &status, 0);
+	ptrace(PTRACE_SETOPTIONS, child_pid, 0, PTRACE_O_TRACESYSGOOD);
+	while (1)
 	{
-		ptrace(PT_SYSCALL, child_pid, NULL, NULL);
-		wait(&status);
-		ptrace(PT_GETREGS, child_pid, NULL, &regs);
-		if (i)
-			printf("\n");
-		else
-			printf("%s", syscalls_64_g[regs.orig_rax].name);
+		if (await_syscall(child_pid))
+			break;
+		memset(&uregs, 0, sizeof(uregs));
+		ptrace(PTRACE_GETREGS, child_pid, 0, &uregs);
+		printf("%s", syscalls_64_g[uregs.orig_rax].name);
+		if (await_syscall(child_pid))
+			break;
+		printf("\n");
 	}
 }
 
