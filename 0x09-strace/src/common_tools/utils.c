@@ -41,6 +41,28 @@ void trace_parent(pid_t child_pid)
 }
 
 /**
+ * trace_name - prints name of given command
+ * @child_pid: pid of child to trace
+ */
+void trace_name(pid_t child_pid)
+{
+	int status, i;
+	struct user_regs_struct regs;
+
+	for (status = 1, i = 1; !WIFEXITED(status); i ^= 1)
+	{
+		ptrace(PT_SYSCALL, child_pid, NULL, NULL);
+		wait(&status);
+		ptrace(PT_GETREGS, child_pid, NULL, &regs);
+		if (i)
+			printf("\n");
+		else
+			printf("%s", syscalls_64_g[regs.orig_rax].name);
+	}
+}
+
+
+/**
  * await_syscall - waits for a syscall
  * @child_pid: pid of process to await
  * Return: 0 if child stopped, 1 if exited
