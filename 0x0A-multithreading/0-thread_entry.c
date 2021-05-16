@@ -1,7 +1,7 @@
 #include "multithreading.h"
 
 /**
- * thread_entry - serves as entry point to new thread
+ * thread_entry - a function that will serve as the entry point to a new thread
  * @arg: holds address of string that must be printed and followed by new line
  * Return: void
  */
