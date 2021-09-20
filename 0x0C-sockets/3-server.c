@@ -1,5 +1,5 @@
 #include "socket.h"
-#define MSG_LEN 255
+#define MSG_LEN 1024
 #define SOCKET_SIZE sizeof(my_socket)
 #define PORT_NUMBER 12345
 
