@@ -1,6 +1,7 @@
 #ifndef _H_SOCKET
 #define _H_SOCKET
 
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
