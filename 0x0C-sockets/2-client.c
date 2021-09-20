@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
 	int socket_fd = 0, accept_fd = 0;
 	struct sockaddr_in my_socket;
-	char *host = NULL;
+	char *host = NULL, *host_number = NULL;
 	unsigned long port = 0;
 
 	if (argc != 3)
@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
 		printf("Socket error %s\n", strerror(errno));
 		return (EXIT_FAILURE);
 	}
-	host = strcmp(host, "localhost") == 0 ? "127.0.0.1" : host;
+	host_number = strcmp(host, "localhost") == 0 ? "127.0.0.1" : host;
 	my_socket.sin_family = AF_INET;
 	my_socket.sin_port = htons(port);
-	my_socket.sin_addr.s_addr = inet_addr(host);
+	my_socket.sin_addr.s_addr = inet_addr(host_number);
 	if (connect(socket_fd, (struct sockaddr *)&my_socket, SOCKET_SIZE) == -1)
 	{
 		printf("Connection error %s\n", strerror(errno));
