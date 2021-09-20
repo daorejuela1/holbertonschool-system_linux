@@ -35,17 +35,14 @@ int main(void)
 	}
 	printf("Server listening on port %d\n", port_number);
 	client_size = sizeof(my_client);
-	while (1)
+	accept_fd = accept(socket_fd, (struct sockaddr *) &my_client, &client_size);
+	if (accept_fd == -1)
 	{
-		accept_fd = accept(socket_fd, (struct sockaddr *) &my_client, &client_size);
-		if (accept_fd == -1)
-		{
-			printf("Accept error %s\n", strerror(errno));
-			return (EXIT_FAILURE);
-		}
-		client_address = inet_ntoa(my_client.sin_addr);
-		printf("Client connected: %s\n", client_address);
-		close(accept_fd);
+		printf("Accept error %s\n", strerror(errno));
+		return (EXIT_FAILURE);
 	}
+	client_address = inet_ntoa(my_client.sin_addr);
+	printf("Client connected: %s\n", client_address);
+	close(accept_fd);
 	return (EXIT_SUCCESS);
 }
