@@ -2,6 +2,7 @@
 #define MSG_LEN 1024
 #define SOCKET_SIZE sizeof(my_socket)
 #define PORT_NUMBER 12345
+#define DEF_MSG "Message received"
 
 /**
  * main - opens an IPv4/TCP socket, and listens to traffic on port 12345
@@ -48,6 +49,6 @@ int main(void)
 		printf("Read error %s\n", strerror(errno));
 		return (EXIT_FAILURE);
 	}
-	printf("Message received: %s\n", message), close(accept_fd), close(socket_fd);
+	printf("%s: \"%s\"\n", DEF_MSG, message), close(accept_fd), close(socket_fd);
 	return (EXIT_SUCCESS);
 }
