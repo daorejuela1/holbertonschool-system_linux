@@ -29,7 +29,7 @@ int main(void)
 	int socket_fd = 0, msg_len = 0;
 	sockaddr_in my_addr, client_addr;
 	char message[MSG_LEN];
-	char *ok_response = "HTTP/1.1 200 OK\n";
+	char ok_response[] = "HTTP/1.1 200 OK\n\n";
 	socket_params my_socket, my_client;
 	response_parse response;
 
@@ -45,7 +45,7 @@ int main(void)
 		memset(message, 0, MSG_LEN);
 		if (!accept_connection(&my_socket, &my_client))
 			return (EXIT_FAILURE);
-		msg_len = recv(my_client.fd, message, MSG_LEN, MSG_WAITALL);
+		msg_len = recv(my_client.fd, message, MSG_LEN, 0);
 		if (msg_len == -1)
 		{
 			printf("Read error %s\n", strerror(errno));
