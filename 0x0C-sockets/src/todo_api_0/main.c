@@ -29,7 +29,7 @@ int main(void)
 	int socket_fd = 0, msg_len = 0;
 	sockaddr_in my_addr, client_addr;
 	char message[MSG_LEN];
-	char ok_response[] = "HTTP/1.1 200 OK\n\n";
+	char ok_response[] = "HTTP/1.1 200 OK\n";
 	socket_params my_socket, my_client;
 	response_parse response;
 
