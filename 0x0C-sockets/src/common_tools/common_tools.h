@@ -1,7 +1,7 @@
 #ifndef H_COMMON_TOOLS
 #define H_COMMON_TOOLS
 
-#define MSG_LEN 1024
+#define MSG_LEN 8192
 
 #include <unistd.h>
 #include <sys/types.h>
