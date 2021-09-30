@@ -18,9 +18,9 @@
 #include "common_tools.h"
 #define TOKEN " \n"
 /**
- * parse_line - extracts information from socket message
+ * parse_message - extracts information from socket message
  * @message: full message
- * @line: line to scan
+ * @response: line to scan
  *
  * Return: 1 on success 0 on failure
  */
@@ -35,18 +35,18 @@ int parse_message(char message[], response_parse *response)
 	response->method = calloc(strlen(method) + 1, 1);
 	strcpy(response->method, method);
 	path = strtok(NULL, TOKEN);
-	response->path= calloc(strlen(path) + 1, 1);
+	response->path = calloc(strlen(path) + 1, 1);
 	strcpy(response->path, path);
 	version = strtok(NULL, TOKEN);
-	response->version= calloc(strlen(version) + 1, 1);
+	response->version = calloc(strlen(version) + 1, 1);
 	strcpy(response->version, version);
 	return (1);
 }
 /**
  * free_response - frees the memory for a response
- * @response - structure with the response
+ * @response: structure with the response
  *
- * Returns: 1 on success
+ * Return: 1 on success
  */
 int free_response(response_parse *response)
 {

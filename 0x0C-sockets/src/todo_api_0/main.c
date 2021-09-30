@@ -33,10 +33,8 @@ int main(void)
 	socket_params my_socket, my_client;
 	response_parse response;
 
-	my_client.addr = &client_addr;
-	my_socket.addr = &my_addr;
-	my_socket.port = PORT_NUMBER;
-	my_socket.ip_addr = "0.0.0.0";
+	my_client.addr = &client_addr, my_socket.addr = &my_addr;
+	my_socket.port = PORT_NUMBER, my_socket.ip_addr = "0.0.0.0";
 	my_socket.fd = create_socket(AF_INET, SOCK_STREAM, 0);
 	if (my_socket.fd == -1)
 		return (EXIT_FAILURE);
@@ -59,7 +57,7 @@ int main(void)
 		printf("Path: %s\n", response.path);
 		printf("Version: %s\n", response.version);
 		free_response(&response);
-		if (send(my_client.fd, ok_response, strlen(ok_response), 0) == -1 )
+		if (send(my_client.fd, ok_response, strlen(ok_response), 0) == -1)
 		{
 			printf("Send error %s\n", strerror(errno));
 			return (EXIT_FAILURE);
