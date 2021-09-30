@@ -16,7 +16,7 @@
  * ===========================================================================
  */
 #include "common_tools.h"
-#define TOKEN " \n"
+#define TOKEN " \t\r\n"
 /**
  * parse_message - extracts information from socket message
  * @message: full message
