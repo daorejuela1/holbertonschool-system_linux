@@ -46,6 +46,21 @@ typedef struct response_parse
 	char *version;
 } response_parse;
 
+/**
+ * struct query_data - stores queries with name and value
+ * @name: querie name
+ * @value: querie value
+ *
+ * Description: Used to store query values
+ * to use sockets - for Holberton project
+ */
+typedef struct query_data
+{
+	char *name;
+	char *value;
+} query_data;
+
+
 typedef struct sockaddr_in sockaddr_in;
 typedef struct sockaddr sockaddr;
 
@@ -54,4 +69,6 @@ int bind_listen_socket(socket_params *my_socket);
 int accept_connection(socket_params *my_socket, socket_params *my_client);
 int parse_message(char message[], response_parse *response);
 int free_response(response_parse *response);
+query_data **parse_queries(char message[], int *num_queries);
+void free_query(query_data **query, int query_len);
 #endif

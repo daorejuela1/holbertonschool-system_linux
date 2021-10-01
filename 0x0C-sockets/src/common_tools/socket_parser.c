@@ -42,6 +42,7 @@ int parse_message(char message[], response_parse *response)
 	strcpy(response->version, version);
 	return (1);
 }
+
 /**
  * free_response - frees the memory for a response
  * @response: structure with the response
@@ -54,4 +55,69 @@ int free_response(response_parse *response)
 	free(response->path);
 	free(response->version);
 	return (1);
+}
+/**
+ * parse_queries - parse queries from the URL
+ * @message: pointer of pointer with the strings
+ * @num_queries: number of queries
+ *
+ * Return: 1 on success 0 on error
+ */
+query_data **parse_queries(char message[], int *num_queries)
+{
+	int i = 0;
+	char *equal_position, *value;
+	int index = 0;
+	char cpy_message[MSG_LEN];
+	query_data **querie = NULL;
+
+	if (!strcpy(cpy_message, message))
+		return (NULL);
+	cpy_message[strlen(message)] = '\0';
+	*num_queries = 0;
+	while (cpy_message[i++])
+	{
+		if (cpy_message[i] == '?' || cpy_message[i] == '&')
+		{
+			(*num_queries)++;
+		}
+	}
+	if (!*num_queries)
+		return (NULL);
+	strtok(cpy_message, "?");
+	querie = calloc((*num_queries) + 1, sizeof(query_data *));
+	if (!querie)
+		return (NULL);
+	for (i = 0; i < *num_queries; i++)
+	{
+		value = strtok(NULL, "?&");
+		equal_position = strchr(value, '=');
+		index = (int)(equal_position - value);
+		querie[i] = malloc(sizeof(query_data));
+		querie[i]->name = calloc(index + 1, 1);
+		querie[i]->value = calloc(strlen(value) - index + 1, 1);
+		strncpy(querie[i]->name, value, index);
+		strcpy(querie[i]->value, value + index + 1);
+	}
+	return (querie);
+}
+
+/**
+ * free_query - parse queries from the URL
+ * @query: pointer of pointer with the strings
+ * @query_len: number of queries
+ *
+ * Return: 1 on success 0 on error
+ */
+void free_query(query_data **query, int query_len)
+{
+	int i;
+
+	for (i = 0; i < query_len; i++)
+	{
+		free(query[i]->name);
+		free(query[i]->value);
+		free(query[i]);
+	}
+	free(query);
 }
