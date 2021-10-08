@@ -143,14 +143,14 @@ query_data **parse_headers(char message[], int *num_headers)
 	*num_headers = 0;
 	while (cpy_message[i++])
 	{
-		if (cpy_message[i] == '\n')
+		if (cpy_message[i] == ':')
 		{
 			(*num_headers)++;
 		}
 	}
-	*num_headers -= 2;
 	if (!*num_headers)
 		return (NULL);
+	(*num_headers)--;
 	strtok(cpy_message, "\r\n");
 	querie = calloc((*num_headers) + 1, sizeof(query_data *));
 	if (!querie)
@@ -159,6 +159,8 @@ query_data **parse_headers(char message[], int *num_headers)
 	{
 		value = strtok(NULL, "\r\n");
 		equal_position = strchr(value, ':');
+		if (!equal_position)
+			break;
 		index = (int)(equal_position - value);
 		querie[i] = malloc(sizeof(query_data));
 		querie[i]->name = calloc(index + 1, 1);
