@@ -28,11 +28,19 @@
 int create_socket(int domain, int type, int protocol)
 {
 	int socket_fd = 0;
+	int opt = 1;
+	int result = 0;
 
 	socket_fd = socket(domain, type, protocol);
 	if (socket_fd == -1)
 	{
 		printf("Socket error %s\n", strerror(errno));
+		return (-1);
+	}
+	result = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+	if (result == -1)
+	{
+		printf("Option error %s\n", strerror(errno));
 		return (-1);
 	}
 	return (socket_fd);

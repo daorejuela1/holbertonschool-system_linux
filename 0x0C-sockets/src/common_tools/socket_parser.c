@@ -121,3 +121,51 @@ void free_query(query_data **query, int query_len)
 	}
 	free(query);
 }
+
+/**
+ * parse_headers - parse headers from the response
+ * @message: pointer of pointer with the strings
+ * @num_headers: number of headers
+ *
+ * Return: 1 on success 0 on error
+ */
+query_data **parse_headers(char message[], int *num_headers)
+{
+	int i = 0;
+	char *equal_position, *value;
+	int index = 0;
+	char cpy_message[MSG_LEN];
+	query_data **querie = NULL;
+
+	if (!strcpy(cpy_message, message))
+		return (NULL);
+	cpy_message[strlen(message)] = '\0';
+	*num_headers = 0;
+	while (cpy_message[i++])
+	{
+		if (cpy_message[i] == '\n')
+		{
+			(*num_headers)++;
+		}
+	}
+	*num_headers -= 2;
+	if (!*num_headers)
+		return (NULL);
+	strtok(cpy_message, "\r\n");
+	querie = calloc((*num_headers) + 1, sizeof(query_data *));
+	if (!querie)
+		return (NULL);
+	for (i = 0; i < *num_headers; i++)
+	{
+		value = strtok(NULL, "\r\n");
+		equal_position = strchr(value, ':');
+		index = (int)(equal_position - value);
+		querie[i] = malloc(sizeof(query_data));
+		querie[i]->name = calloc(index + 1, 1);
+		querie[i]->value = calloc(strlen(value) - index, 1);
+		strncpy(querie[i]->name, value, index);
+		strcpy(querie[i]->value, value + index + 2);
+	}
+	return (querie);
+}
+

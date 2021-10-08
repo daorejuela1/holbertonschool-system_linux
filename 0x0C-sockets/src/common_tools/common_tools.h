@@ -71,4 +71,5 @@ int parse_message(char message[], response_parse *response);
 int free_response(response_parse *response);
 query_data **parse_queries(char message[], int *num_queries);
 void free_query(query_data **query, int query_len);
+query_data **parse_headers(char message[], int *num_headers);
 #endif
