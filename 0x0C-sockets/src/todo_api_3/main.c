@@ -26,12 +26,12 @@
  */
 int main(void)
 {
-	int msg_len = 0, num_queries = 0, i = 0;
+	int msg_len = 0, num_body = 0, i = 0;
 	char ok_response[] = "HTTP/1.1 200 OK\n\n", message[MSG_LEN], path[MSG_LEN];
 	sockaddr_in my_addr, client_addr;
 	socket_params my_socket, my_client;
 	response_parse response;
-	query_data **query = NULL;
+	query_data **body = NULL;
 	char *filtered_path = NULL;
 
 	setbuf(stdout, NULL);
@@ -55,13 +55,13 @@ int main(void)
 		}
 		parse_message(message, &response);
 		printf("%s: \"%s\"\n", DEF_MSG, message);
-		query = parse_queries(response.path, &num_queries);
+		body = parse_body(message, &num_body);
 		strcpy(path, response.path);
 		filtered_path = strtok(path, "?");
 		printf("Path: %s\n", filtered_path);
-		for (i = 0; i < num_queries; i++)
-			printf("Query: \"%s\" -> \"%s\"\n", query[i]->name,  query[i]->value);
-		free_response(&response), free_query(query, num_queries);
+		for (i = 0; i < num_body; i++)
+			printf("Body param: \"%s\" -> \"%s\"\n", body[i]->name,  body[i]->value);
+		free_response(&response), free_query(body, num_body);
 		if (send(my_client.fd, ok_response, strlen(ok_response), 0) == -1)
 		{
 			printf("Send error %s\n", strerror(errno));
