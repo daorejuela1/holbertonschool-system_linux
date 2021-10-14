@@ -21,6 +21,12 @@
 extern int todo_id;
 extern todo_task **todo_tasks;
 /**
+ * create_response - response using object json format
+ * @task - task used
+ *
+ * Return: Nothing
+ */
+/**
  * get_response- response using object json format
  * @task - task used
  *
@@ -146,19 +152,23 @@ char *get_todos()
 	for (j = 0; j < todo_id; j++)
 	{
 		strcat(data, "{");
-		for (i = 0; i < 3; i++)
+		if (todo_tasks[j])
 		{
-			if (i == 0)
-				sprintf(value, "\"id\":%d,", todo_tasks[j]->id);
-			if (i == 1)
-				sprintf(value, "\"title\":\"%s\",", todo_tasks[j]->title);
-			if (i == 2)
-				sprintf(value, "\"description\":\"%s\"", todo_tasks[j]->description);
-			strcat(data, value);
+
+			for (i = 0; i < 3; i++)
+			{
+				if (i == 0)
+					sprintf(value, "\"id\":%d,", todo_tasks[j]->id);
+				if (i == 1)
+					sprintf(value, "\"title\":\"%s\",", todo_tasks[j]->title);
+				if (i == 2)
+					sprintf(value, "\"description\":\"%s\"", todo_tasks[j]->description);
+				strcat(data, value);
+			}
+			strcat(data, "}");
+			if (j != todo_id - 1)
+				strcat(data, ",");
 		}
-		strcat(data, "}");
-		if (j != todo_id - 1)
-			strcat(data, ",");
 	}
 	strcat(data, "]");
 	sprintf(content_length, "%lu", strlen(data));
@@ -173,7 +183,7 @@ char *get_todos()
 }
 
 /**
- * get_todos - gets a list with all todos
+ * get_todo - gets a todo
  *
  * Return: message with all todos
  */
@@ -184,10 +194,37 @@ char *get_todo(int id)
 
 	for (j = 0; j < todo_id; j++)
 	{
+		if (todo_tasks[j])
 		if (todo_tasks[j]->id == id)
 			found_task = todo_tasks[j];
 	}
 	if (!found_task)
 		return (BAD_RESPONSE);
 	return (get_response(found_task));
+}
+
+/**
+ * delete_todo - deletes a todo
+ *
+ * Return: message with all todos
+ */
+char *delete_todo(int id)
+{
+	int j = 0;
+	todo_task *found_task = NULL;
+
+	for (j = 0; j < todo_id; j++)
+	{
+		if (todo_tasks[j])
+		if (todo_tasks[j]->id == id)
+		{
+			found_task = todo_tasks[j];
+			break;
+		}
+	}
+	if (!found_task)
+		return (BAD_RESPONSE);
+	free(found_task);
+	todo_tasks[j] = NULL;
+	return (NO_CONTENT_RESPONSE);
 }

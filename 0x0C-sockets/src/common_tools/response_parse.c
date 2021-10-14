@@ -40,6 +40,8 @@ char *parse_response(char message[], response_parse *response)
 	{
 		if (strcmp(response->method, "GET") == 0)
 			return (get_todo(atoi(id)));
+		else if (strcmp(response->method, "DELETE") == 0)
+			return (delete_todo(atoi(id)));
 	}
 	else if (strcmp(filtered_path, "/todos") == 0)
 	{

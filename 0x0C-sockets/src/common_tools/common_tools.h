@@ -15,6 +15,7 @@
 /*HTTP RESPONSES*/
 #define OK_RESPONSE "HTTP/1.1 200 OK\r\n"
 #define BAD_RESPONSE "HTTP/1.1 404 Not Found\r\n\r\n"
+#define NO_CONTENT_RESPONSE "HTTP/1.1 204 No Content\r\n\r\n"
 #define UNPROCCESABLE_RESPONSE "HTTP/1.1 422 Unprocessable Entity\r\n\r\n"
 #define CREATED_RESPONSE "HTTP/1.1 201 Created\r\n"
 #define LENGTH_REQ_RESPONSE "HTTP/1.1 411 Length Required\r\n\r\n"
@@ -100,4 +101,5 @@ char *parse_response(char message[], response_parse *response);
 char *create_todo(char message[]);
 char *get_todos();
 char *get_todo(int id);
+char *delete_todo(int id);
 #endif
