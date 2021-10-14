@@ -151,10 +151,9 @@ char *get_todos()
 	strcpy(data, "[");
 	for (j = 0; j < todo_id; j++)
 	{
-		strcat(data, "{");
 		if (todo_tasks[j])
 		{
-
+			strcat(data, "{");
 			for (i = 0; i < 3; i++)
 			{
 				if (i == 0)
@@ -195,8 +194,8 @@ char *get_todo(int id)
 	for (j = 0; j < todo_id; j++)
 	{
 		if (todo_tasks[j])
-		if (todo_tasks[j]->id == id)
-			found_task = todo_tasks[j];
+			if (todo_tasks[j]->id == id)
+				found_task = todo_tasks[j];
 	}
 	if (!found_task)
 		return (BAD_RESPONSE);
@@ -216,11 +215,11 @@ char *delete_todo(int id)
 	for (j = 0; j < todo_id; j++)
 	{
 		if (todo_tasks[j])
-		if (todo_tasks[j]->id == id)
-		{
-			found_task = todo_tasks[j];
-			break;
-		}
+			if (todo_tasks[j]->id == id)
+			{
+				found_task = todo_tasks[j];
+				break;
+			}
 	}
 	if (!found_task)
 		return (BAD_RESPONSE);
