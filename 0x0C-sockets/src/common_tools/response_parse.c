@@ -35,6 +35,8 @@ char *parse_response(char message[], response_parse *response)
 	{
 		if (strcmp(response->method, "POST") == 0)
 			return (create_todo(message));
+		else if (strcmp(response->method, "GET") == 0)
+			return (get_todos());
 		return (BAD_RESPONSE);
 	}
 	else

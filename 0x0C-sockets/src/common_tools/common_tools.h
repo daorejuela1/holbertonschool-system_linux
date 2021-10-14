@@ -13,7 +13,7 @@
 #include <arpa/inet.h>
 
 /*HTTP RESPONSES*/
-#define OK_RESPONSE "HTTP/1.1 200 OK\n\n"
+#define OK_RESPONSE "HTTP/1.1 200 OK\r\n"
 #define BAD_RESPONSE "HTTP/1.1 404 Not Found\r\n\r\n"
 #define UNPROCCESABLE_RESPONSE "HTTP/1.1 422 Unprocessable Entity\r\n\r\n"
 #define CREATED_RESPONSE "HTTP/1.1 201 Created\r\n"
@@ -95,7 +95,8 @@ query_data **parse_queries(char message[], int *num_queries);
 void free_query(query_data **query, int query_len);
 query_data **parse_headers(char message[], int *num_headers);
 query_data **parse_body(char message[], int *num_body);
-char *create_todo(char message[]);
 char *get_key_value(char *key, query_data **structure, int struct_len);
 char *parse_response(char message[], response_parse *response);
+char *create_todo(char message[]);
+char *get_todos();
 #endif
