@@ -99,4 +99,5 @@ char *get_key_value(char *key, query_data **structure, int struct_len);
 char *parse_response(char message[], response_parse *response);
 char *create_todo(char message[]);
 char *get_todos();
+char *get_todo(int id);
 #endif

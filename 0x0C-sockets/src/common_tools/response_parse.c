@@ -28,10 +28,20 @@ char *parse_response(char message[], response_parse *response)
 {
 	char path[MSG_LEN];
 	char *filtered_path = NULL;
+	query_data **query = NULL;
+	int num_queries = 0;
+	char *id = NULL;
 
+	query = parse_queries(response->path, &num_queries);
+	id = get_key_value("id", query, num_queries);
 	strcpy(path, response->path);
 	filtered_path = strtok(path, "?");
-	if (strcmp(filtered_path, "/todos") == 0)
+	if (strcmp(filtered_path, "/todos") == 0 && id)
+	{
+		if (strcmp(response->method, "GET") == 0)
+			return (get_todo(atoi(id)));
+	}
+	else if (strcmp(filtered_path, "/todos") == 0)
 	{
 		if (strcmp(response->method, "POST") == 0)
 			return (create_todo(message));
@@ -39,10 +49,7 @@ char *parse_response(char message[], response_parse *response)
 			return (get_todos());
 		return (BAD_RESPONSE);
 	}
-	else
-	{
-		return (BAD_RESPONSE);
-	}
+	return (BAD_RESPONSE);
 }
 
 /**

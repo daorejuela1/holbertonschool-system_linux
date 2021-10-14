@@ -21,6 +21,44 @@
 extern int todo_id;
 extern todo_task **todo_tasks;
 /**
+ * get_response- response using object json format
+ * @task - task used
+ *
+ * Return: char with response
+ */
+static char *get_response(todo_task *task)
+{
+	int i = 0;
+	static char get_response[1000];
+	char data[1000];
+	char value[1000];
+	char content_length[20];
+
+	memset(data, 0, 1000);
+	strcpy(data, "{");
+	for (i = 0; i < 3; i++)
+	{
+		if (i == 0)
+			sprintf(value, "\"id\":%d,", task->id);
+		if (i == 1)
+			sprintf(value, "\"title\":\"%s\",", task->title);
+		if (i == 2)
+			sprintf(value, "\"description\":\"%s\"", task->description);
+		strcat(data, value);
+	}
+	strcat(data, "}");
+	sprintf(content_length, "%lu", strlen(data));
+	memset(get_response, 0, 1000);
+	strcpy(get_response, OK_RESPONSE);
+	strcat(get_response, "Content-Length: ");
+	strcat(get_response, content_length);
+	strcat(get_response, "\r\n");
+	strcat(get_response, "Content-Type: application/json\r\n\r\n");
+	strcat(get_response, data);
+	return (get_response);
+}
+
+/**
  * create_response - response using object json format
  * @task - task used
  *
@@ -132,4 +170,24 @@ char *get_todos()
 	strcat(get_response, "Content-Type: application/json\r\n\r\n");
 	strcat(get_response, data);
 	return (get_response);
+}
+
+/**
+ * get_todos - gets a list with all todos
+ *
+ * Return: message with all todos
+ */
+char *get_todo(int id)
+{
+	int j = 0;
+	todo_task *found_task = NULL;
+
+	for (j = 0; j < todo_id; j++)
+	{
+		if (todo_tasks[j]->id == id)
+			found_task = todo_tasks[j];
+	}
+	if (!found_task)
+		return (BAD_RESPONSE);
+	return (get_response(found_task));
 }
