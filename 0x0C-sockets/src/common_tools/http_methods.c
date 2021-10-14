@@ -51,8 +51,8 @@ static char *create_response(todo_task *task)
 	strcpy(response, CREATED_RESPONSE);
 	strcat(response, "Content-Length: ");
 	strcat(response, content_length);
-	strcat(response, "\n");
-	strcat(response, "Content-Type: application/json\n\n");
+	strcat(response, "\r\n");
+	strcat(response, "Content-Type: application/json\r\n\r\n");
 	strcat(response, data);
 	return (response);
 }
