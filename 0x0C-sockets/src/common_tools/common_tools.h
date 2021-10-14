@@ -14,10 +14,10 @@
 
 /*HTTP RESPONSES*/
 #define OK_RESPONSE "HTTP/1.1 200 OK\n\n"
-#define BAD_RESPONSE "HTTP/1.1 404 Not Found\n\n"
-#define UNPROCCESABLE_RESPONSE "HTTP/1.1 422 Unprocessable Entity\n\n"
+#define BAD_RESPONSE "HTTP/1.1 404 Not Found\r\n\r\n"
+#define UNPROCCESABLE_RESPONSE "HTTP/1.1 422 Unprocessable Entity\r\n\r\n"
 #define CREATED_RESPONSE "HTTP/1.1 201 Created\r\n"
-#define LENGTH_REQ_RESPONSE "HTTP/1.1 411 Length Required\n\n"
+#define LENGTH_REQ_RESPONSE "HTTP/1.1 411 Length Required\r\n\r\n"
 
 /**
  * struct socket_params - socket neccesary params
