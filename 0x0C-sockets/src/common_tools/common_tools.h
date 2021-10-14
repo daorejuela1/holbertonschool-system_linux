@@ -12,6 +12,13 @@
 #include <string.h>
 #include <arpa/inet.h>
 
+/*HTTP RESPONSES*/
+#define OK_RESPONSE "HTTP/1.1 200 OK\n\n"
+#define BAD_RESPONSE "HTTP/1.1 404 Not Found\n\n"
+#define UNPROCCESABLE_RESPONSE "HTTP/1.1 422 Unprocessable Entity\n\n"
+#define CREATED_RESPONSE "HTTP/1.1 201 Created\n"
+#define LENGTH_REQ_RESPONSE "HTTP/1.1 411 Length Required\n\n"
+
 /**
  * struct socket_params - socket neccesary params
  * @fd: socket file descriptor
@@ -61,6 +68,21 @@ typedef struct query_data
 } query_data;
 
 
+/**
+ * struct todo_task - creates a todo task
+ * @id: task id
+ * @title: task title 
+ * @description: task description
+ *
+ * Description: Used to store a task
+ */
+typedef struct todo
+{
+	int id;
+	char title[100];
+	char description[100];
+} todo_task;
+
 typedef struct sockaddr_in sockaddr_in;
 typedef struct sockaddr sockaddr;
 
@@ -73,4 +95,7 @@ query_data **parse_queries(char message[], int *num_queries);
 void free_query(query_data **query, int query_len);
 query_data **parse_headers(char message[], int *num_headers);
 query_data **parse_body(char message[], int *num_body);
+char *create_todo(char message[]);
+char *get_key_value(char *key, query_data **structure, int struct_len);
+char *parse_response(char message[], response_parse *response);
 #endif

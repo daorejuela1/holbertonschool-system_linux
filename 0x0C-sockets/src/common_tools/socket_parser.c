@@ -56,6 +56,7 @@ int free_response(response_parse *response)
 	free(response->version);
 	return (1);
 }
+
 /**
  * parse_queries - parse queries from the URL
  * @message: pointer of pointer with the strings
