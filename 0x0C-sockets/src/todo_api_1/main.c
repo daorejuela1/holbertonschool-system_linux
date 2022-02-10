@@ -19,6 +19,8 @@
 #define SOCKET_SIZE sizeof(my_socket)
 #define PORT_NUMBER 8080
 #define DEF_MSG "Raw request"
+int todo_id = 0;
+todo_task **todo_tasks = NULL;
 /**
  * main - opens an IPv4/TCP socket, and listens to traffic on port 12345
  *
